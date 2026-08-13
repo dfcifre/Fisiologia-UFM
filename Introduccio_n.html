@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación Formativa | Sistema Respiratorio Introducción</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f14;
+  --surface: #121820;
+  --card: #1a2332;
+  --card2: #1e2a3a;
+  --border: #2d3f55;
+  --primary: #2ea043;
+  --primary-light: #4caf64;
+  --primary-glow: rgba(46,160,67,0.18);
+  --accent: #56d364;
+  --accent2: #73e885;
+  --teal: #1abc9c;
+  --blue: #3b82f6;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --text: #d8e8f0;
+  --text-muted: #7a9ab5;
+  --text-faint: #3d5a73;
+  --alveoli: #2ecc71;
+  --capillary: #e74c3c;
+  --airways: #3498db;
+  --muscles: #9b59b6;
+  --font-head: 'Playfair Display', Georgia, serif;
+  --font-body: 'Nunito', sans-serif;
+  --radius: 14px;
+  --shadow: 0 8px 40px rgba(0,0,0,0.55);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.7;
+}
+/* ─── PROGRESS BAR ─────────────────────────────── */
+#progress-bar-wrap{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:10px 20px 6px;
+}
+#prog-title{
+  font-family:var(--font-head);
+  font-size:.85rem;color:var(--accent);
+  letter-spacing:.04em;margin-bottom:6px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.prog-bar-outer{
+  background:var(--border);
+  border-radius:50px;height:6px;overflow:hidden;
+}
+.prog-bar-inner{
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--accent2));
+  border-radius:50px;
+  transition:width .5s ease;
+  width:0%;
+}
+/* ─── NAV DOTS ─────────────────────────────── */
+#nav-dots{
+  position:fixed;right:16px;top:50%;transform:translateY(-50%);
+  z-index:999;display:flex;flex-direction:column;gap:10px;
+}
+.nav-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--border);cursor:pointer;
+  transition:all .3s;border:2px solid transparent;
+}
+.nav-dot.active{background:var(--accent);border-color:var(--accent2);}
+.nav-dot:hover{background:var(--primary-light);}
+/* ─── SECTIONS ─────────────────────────────── */
+.section{
+  min-height:100vh;padding:80px 20px 60px;
+  display:flex;flex-direction:column;align-items:center;
+}
+.section-inner{width:100%;max-width:900px;}
+/* ─── TYPOGRAPHY ─────────────────────────────── */
+h1{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;line-height:1.2;}
+h2{font-family:var(--font-head);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin-bottom:1rem;}
+h3{font-family:var(--font-head);font-size:1.25rem;font-weight:600;margin-bottom:.6rem;}
+h4{font-family:var(--font-body);font-size:1rem;font-weight:700;margin-bottom:.4rem;}
+p{margin-bottom:.9rem;font-size:.975rem;}
+/* ─── CARDS ─────────────────────────────── */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:22px 28px;
+  margin-bottom:20px;box-shadow:var(--shadow);
+}
+.card-accent{border-left:4px solid var(--accent);}
+.card-alveoli{border-left:4px solid var(--alveoli);}
+.card-airways{border-left:4px solid var(--airways);}
+.card-capillary{border-left:4px solid var(--capillary);}
+.card-muscles{border-left:4px solid var(--muscles);}
+.card-amber{border-left:4px solid var(--amber);}
+/* ─── ANALOGIA BOX ─────────────────────────────── */
+.analogy{
+  background:linear-gradient(135deg,rgba(46,160,67,.13),rgba(56,211,100,.06));
+  border:1px dashed var(--primary);
+  border-radius:12px;padding:18px 22px;
+  margin:16px 0;position:relative;
+}
+.analogy::before{
+  content:"🔬 Analogía";
+  font-size:.72rem;font-weight:700;
+  color:var(--accent);
+  letter-spacing:.08em;text-transform:uppercase;
+  display:block;margin-bottom:8px;
+}
+/* ─── BADGES ─────────────────────────────── */
+.badge{
+  display:inline-block;
+  padding:3px 10px;border-radius:20px;
+  font-size:.75rem;font-weight:700;
+  letter-spacing:.04em;margin:2px 4px 2px 0;
+}
+.badge-green{background:rgba(46,160,67,.25);color:var(--accent2);}
+.badge-blue{background:rgba(59,130,246,.25);color:#93c5fd;}
+.badge-amber{background:rgba(245,158,11,.2);color:#fcd34d;}
+.badge-red{background:rgba(239,68,68,.2);color:#fca5a5;}
+.badge-purple{background:rgba(155,89,182,.2);color:#c4b5fd;}
+/* ─── CANVAS WRAPPERS ─────────────────────────────── */
+.canvas-wrap{
+  border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+  background:var(--surface);margin:16px 0;
+  position:relative;
+}
+canvas{display:block;width:100%;}
+.canvas-legend{
+  display:flex;flex-wrap:wrap;gap:10px;
+  padding:12px 16px;background:var(--card2);
+  border-top:1px solid var(--border);font-size:.78rem;
+}
+.legend-item{display:flex;align-items:center;gap:6px;}
+.legend-dot{width:12px;height:12px;border-radius:50%;}
+/* ─── FORMULA CARDS ─────────────────────────────── */
+.formula-display{
+  background:var(--surface);border:1px solid var(--accent);
+  border-radius:10px;padding:14px 20px;
+  font-family:'Courier New',monospace;
+  font-size:1rem;color:var(--accent2);
+  text-align:center;margin:14px 0;letter-spacing:.02em;
+}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:14px 0;}
+.calc-field label{font-size:.8rem;color:var(--text-muted);display:block;margin-bottom:4px;}
+.calc-field input,
+.calc-field select{
+  width:100%;background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;padding:8px 12px;
+  color:var(--text);font-family:var(--font-body);font-size:.9rem;
+  transition:border .2s;
+}
+.calc-field input:focus,
+.calc-field select:focus{outline:none;border-color:var(--primary);}
+.result-box{
+  background:linear-gradient(135deg,rgba(46,160,67,.2),rgba(27,188,156,.15));
+  border:1px solid var(--primary);border-radius:10px;
+  padding:16px 22px;text-align:center;margin-top:12px;
+}
+.result-value{font-family:var(--font-head);font-size:1.8rem;color:var(--accent2);}
+.result-label{font-size:.8rem;color:var(--text-muted);}
+/* ─── BUTTONS ─────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 22px;border-radius:50px;
+  font-family:var(--font-body);font-size:.9rem;font-weight:600;
+  cursor:pointer;border:none;transition:all .25s;
+  text-decoration:none;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--teal));
+  color:#fff;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(46,160,67,.4);}
+.btn-outline{
+  background:transparent;border:1.5px solid var(--primary);
+  color:var(--accent);
+}
+.btn-outline:hover{background:var(--primary-glow);}
+.btn-preset{
+  background:var(--card2);border:1.5px solid var(--border);
+  color:var(--text);font-size:.82rem;padding:8px 14px;border-radius:8px;
+  cursor:pointer;font-family:var(--font-body);transition:all .2s;
+}
+.btn-preset:hover{border-color:var(--primary);color:var(--accent);}
+.btn-preset.active{background:rgba(46,160,67,.2);border-color:var(--accent);color:var(--accent2);}
+.btn-calc{
+  background:linear-gradient(135deg,var(--primary),#1a7a38);
+  color:#fff;width:100%;margin-top:12px;
+  justify-content:center;font-size:.9rem;
+  border-radius:10px;padding:12px;
+}
+.btn-calc:hover{box-shadow:0 4px 16px rgba(46,160,67,.35);}
+/* ─── SLIDERS ─────────────────────────────── */
+.slider-group{margin:12px 0;}
+.slider-label{
+  display:flex;justify-content:space-between;
+  font-size:.85rem;color:var(--text-muted);margin-bottom:6px;
+}
+.slider-val{color:var(--accent);font-weight:700;}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:6px;background:var(--border);
+  border-radius:50px;outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg);
+  cursor:pointer;transition:transform .15s;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
+/* ─── CLINICAL BOX ─────────────────────────────── */
+.clinical-box{
+  border-radius:12px;padding:18px 22px;margin-top:16px;
+  border:1px solid;transition:all .4s;
+}
+.clinical-normal{background:rgba(46,160,67,.12);border-color:var(--primary);}
+.clinical-warning{background:rgba(245,158,11,.1);border-color:var(--amber);}
+.clinical-danger{background:rgba(239,68,68,.1);border-color:var(--red);}
+.clinical-info{background:rgba(59,130,246,.1);border-color:var(--blue);}
+/* ─── QUIZ ─────────────────────────────── */
+.quiz-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:24px 28px;margin-bottom:24px;
+  transition:border .3s;
+}
+.quiz-card.answered-correct{border-color:var(--accent);}
+.quiz-card.answered-wrong{border-color:var(--red);}
+.question-num{
+  font-size:.76rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;
+}
+.question-text{font-size:1rem;font-weight:600;margin-bottom:16px;line-height:1.5;}
+.options{display:flex;flex-direction:column;gap:10px;}
+.option{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:10px;padding:12px 16px;
+  cursor:pointer;transition:all .2s;font-size:.92rem;
+}
+.option:hover:not(.disabled){
+  border-color:var(--primary);
+  background:var(--primary-glow);
+}
+.option.correct{background:rgba(46,160,67,.18);border-color:var(--accent);}
+.option.wrong{background:rgba(239,68,68,.15);border-color:var(--red);}
+.option.disabled{cursor:default;}
+.opt-letter{
+  min-width:26px;height:26px;border-radius:50%;
+  background:var(--card2);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.82rem;flex-shrink:0;
+  margin-top:1px;
+}
+.feedback-box{
+  margin-top:14px;padding:14px 18px;
+  border-radius:10px;font-size:.9rem;line-height:1.6;
+  display:none;
+}
+.feedback-correct{background:rgba(46,160,67,.15);border:1px solid var(--primary);color:var(--accent2);}
+.feedback-wrong{background:rgba(239,68,68,.12);border:1px solid var(--red);color:#fca5a5;}
+/* ─── SCORE DISPLAY ─────────────────────────────── */
+.score-circle{
+  width:160px;height:160px;border-radius:50%;
+  background:conic-gradient(var(--accent) 0deg, var(--border) 0deg);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;position:relative;
+}
+.score-inner{
+  width:130px;height:130px;border-radius:50%;
+  background:var(--card);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-num{font-family:var(--font-head);font-size:2.2rem;color:var(--accent2);font-weight:700;}
+.score-den{font-size:.85rem;color:var(--text-muted);}
+.motivational{
+  font-family:var(--font-head);font-size:1.4rem;font-style:italic;
+  color:var(--accent2);text-align:center;margin:16px 0;
+}
+/* ─── TABLE ─────────────────────────────── */
+.data-table{
+  width:100%;border-collapse:collapse;font-size:.85rem;margin:16px 0;
+  border-radius:10px;overflow:hidden;
+}
+.data-table th{
+  background:var(--card2);color:var(--accent);
+  padding:10px 14px;text-align:left;
+  font-weight:700;letter-spacing:.05em;font-size:.78rem;text-transform:uppercase;
+}
+.data-table td{
+  padding:9px 14px;border-bottom:1px solid var(--border);
+  color:var(--text);
+}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:rgba(255,255,255,.03);}
+/* ─── WELCOME MAP ─────────────────────────────── */
+.tut-map{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;margin:24px 0;
+}
+.tut-step{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:12px;padding:16px;text-align:center;
+  cursor:pointer;transition:all .25s;
+}
+.tut-step:hover{border-color:var(--primary);transform:translateY(-3px);}
+.tut-step .step-icon{font-size:2rem;margin-bottom:8px;}
+.tut-step .step-name{font-size:.82rem;font-weight:600;color:var(--text-muted);}
+.tut-step .step-num{
+  font-family:var(--font-head);font-size:1.2rem;
+  color:var(--accent);font-weight:700;
+}
+/* ─── SECTION HEADERS ─────────────────────────────── */
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--primary-glow);border:1px solid var(--primary);
+  border-radius:50px;padding:5px 14px;
+  font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:12px;
+}
+.divider{
+  border:none;border-top:1px solid var(--border);
+  margin:28px 0;
+}
+/* ─── SYMBOL TABLE ─────────────────────────────── */
+.symbol-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:8px;margin:12px 0;
+}
+.symbol-item{
+  display:flex;align-items:center;gap:10px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:8px 14px;font-size:.85rem;
+}
+.symbol-key{
+  font-family:'Courier New',monospace;
+  font-weight:700;color:var(--accent);
+  min-width:32px;font-size:.95rem;
+}
+/* ─── RESP ─────────────────────────────── */
+@media(max-width:640px){
+  .tut-map{grid-template-columns:repeat(2,1fr);}
+  .calc-grid{grid-template-columns:1fr;}
+  .card{padding:16px 18px;}
+  .quiz-card{padding:16px 20px;}
+  #nav-dots{right:8px;}
+}
+/* ─── INTRO ANIMATION ─────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp .6s ease both;}
+.delay-1{animation-delay:.1s;} .delay-2{animation-delay:.2s;} .delay-3{animation-delay:.3s;} .delay-4{animation-delay:.4s;}
+@keyframes pulse{0%,100%{opacity:.8;transform:scale(1);}50%{opacity:1;transform:scale(1.05);}}
+.pulse{animation:pulse 2s infinite;}
+/* ─── GAS LAWS TABS ─────────────────────────────── */
+.tab-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab-btn{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:8px;padding:7px 14px;font-family:var(--font-body);
+  font-size:.8rem;font-weight:600;cursor:pointer;color:var(--text-muted);
+  transition:all .2s;
+}
+.tab-btn.active{background:var(--primary-glow);border-color:var(--primary);color:var(--accent);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+/* ─── REVIEW SECTION ─────────────────────────────── */
+#review-section{display:none;}
+.review-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--border);
+}
+.review-icon{font-size:1.1rem;min-width:22px;margin-top:2px;}
+.review-question{font-size:.88rem;color:var(--text-muted);margin-bottom:3px;}
+.review-answer{font-size:.88rem;font-weight:600;}
+.review-correct{color:var(--accent);}
+.review-wrong{color:var(--red);}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar-wrap">
+  <div id="prog-title">
+    <span>🫁 Sistema Respiratorio: Introducción</span>
+    <span id="prog-pct" style="font-family:var(--font-body);font-size:.8rem;color:var(--text-muted);">Sección 1 de 9</span>
+  </div>
+  <div class="prog-bar-outer"><div class="prog-bar-inner" id="prog-bar"></div></div>
+</div>
+
+<!-- NAV DOTS -->
+<nav id="nav-dots">
+  <div class="nav-dot active" data-sec="0" title="Bienvenida" onclick="gotoSec(0)"></div>
+  <div class="nav-dot" data-sec="1" title="Funciones" onclick="gotoSec(1)"></div>
+  <div class="nav-dot" data-sec="2" title="Estructura" onclick="gotoSec(2)"></div>
+  <div class="nav-dot" data-sec="3" title="Alvéolo" onclick="gotoSec(3)"></div>
+  <div class="nav-dot" data-sec="4" title="Pared Torácica" onclick="gotoSec(4)"></div>
+  <div class="nav-dot" data-sec="5" title="Leyes de Gases" onclick="gotoSec(5)"></div>
+  <div class="nav-dot" data-sec="6" title="Laboratorio" onclick="gotoSec(6)"></div>
+  <div class="nav-dot" data-sec="7" title="Quiz" onclick="gotoSec(7)"></div>
+  <div class="nav-dot" data-sec="8" title="Evaluación" onclick="gotoSec(8)"></div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 0: BIENVENIDA
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-0">
+<div class="section-inner">
+  <div class="section-tag">🫁 Evaluación Formativa</div>
+  <h1 class="fade-up" style="background:linear-gradient(135deg,#56d364,#1abc9c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;">
+    Sistema Respiratorio
+  </h1>
+  <h2 class="fade-up delay-1" style="color:var(--text-muted);font-style:italic;font-size:1.3rem;margin-bottom:8px;">
+    Introducción: Función y Estructura
+  </h2>
+  <p class="fade-up delay-2" style="color:var(--text-muted);font-size:.9rem;max-width:600px;">
+    Basado en: <span style="color:var(--accent);">Lange Pulmonary Physiology, 9ª edición</span> — Capítulo 1 + Apéndice
+  </p>
+  <hr class="divider" style="margin:24px 0;">
+
+  <h3 style="color:var(--accent);margin-bottom:16px;">🗺️ Mapa de la Tutoría</h3>
+  <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:4px;">Haz clic en cualquier sección para navegar directamente.</p>
+  <div class="tut-map fade-up delay-3">
+    <div class="tut-step" onclick="gotoSec(1)">
+      <div class="step-icon">🔄</div>
+      <div class="step-num">01</div>
+      <div class="step-name">Funciones del SR</div>
+    </div>
+    <div class="tut-step" onclick="gotoSec(2)">
+      <div class="step-icon">🌿</div>
+      <div class="step-num">02</div>
+      <div class="step-name">Vías Aéreas</div>
+    </div>
+    <div class="tut-step" onclick="gotoSec(3)">
+      <div class="step-icon">🔬</div>
+      <div class="step-num">03</div>
+      <div class="step-name">Unidad Alvéolo-Capilar</div>
+    </div>
+    <div class="tut-step" onclick="gotoSec(4)">
+      <div class="step-icon">💪</div>
+      <div class="step-num">04</div>
+      <div class="step-name">Pared Torácica</div>
+    </div>
+    <div class="tut-step" onclick="gotoSec(5)">
+      <div class="step-icon">⚗️</div>
+      <div class="step-num">05</div>
+      <div class="step-name">Leyes de Gases</div>
+    </div>
+    <div class="tut-step" onclick="gotoSec(6)">
+      <div class="step-icon">🧪</div>
+      <div class="step-num">06</div>
+      <div class="step-name">Laboratorio Virtual</div>
+    </div>
+    <div class="tut-step" onclick="gotoSec(7)">
+      <div class="step-icon">📝</div>
+      <div class="step-num">07</div>
+      <div class="step-name">Quiz (17 preguntas)</div>
+    </div>
+    <div class="tut-step" onclick="gotoSec(8)">
+      <div class="step-icon">🏆</div>
+      <div class="step-num">08</div>
+      <div class="step-name">Evaluación Final</div>
+    </div>
+  </div>
+
+  <div class="card card-accent" style="margin-top:28px;">
+    <h4>📋 Objetivos del Capítulo 1</h4>
+    <ul style="margin-top:8px;padding-left:18px;font-size:.9rem;color:var(--text-muted);">
+      <li>Describir las funciones del sistema respiratorio y su organización estructural</li>
+      <li>Explicar el intercambio de O₂ y CO₂ entre la atmósfera y los tejidos</li>
+      <li>Definir el rol del SR en el equilibrio ácido-base</li>
+      <li>Describir la unidad alvéolo-capilar, sitio del intercambio gaseoso</li>
+      <li>Identificar las características estructurales de las vías aéreas</li>
+      <li>Comprender las leyes físicas que gobiernan el comportamiento de los gases</li>
+    </ul>
+  </div>
+
+  <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="gotoSec(1)">Comenzar la Tutoría →</button>
+    <button class="btn btn-outline" onclick="gotoSec(7)">Ir directo al Quiz</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 1: FUNCIONES DEL SR
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-1" style="background:linear-gradient(180deg,#0b0f14,#0e1520);">
+<div class="section-inner">
+  <div class="section-tag">📚 Sección 1</div>
+  <h2>Funciones del Sistema Respiratorio</h2>
+  <p style="color:var(--text-muted);">El sistema respiratorio tiene múltiples funciones que van más allá del simple intercambio de gases.</p>
+
+  <div class="card card-alveoli">
+    <span class="badge badge-green">Principal</span>
+    <h3>1. Intercambio Gaseoso</h3>
+    <p>El O₂ del ambiente se intercambia por CO₂ producido por el metabolismo celular <strong>en los alvéolos</strong>. El aire fresco es inspirado por las vías conductoras impulsado por los músculos respiratorios. La sangre venosa mixta (alto CO₂, bajo O₂) llega a los capilares pulmonares desde el ventrículo derecho; allí el CO₂ se intercambia por O₂ alveolar. La sangre oxigenada retorna al ventrículo izquierdo para distribuirse a los tejidos.</p>
+    <div class="analogy">
+      Imagina una lavandería de doble ventanilla: por una ventana entran sacos sucios (CO₂) y por la otra salen sacos limpios (O₂). Los alvéolos son esas ventanillas donde se hace el intercambio.
+    </div>
+  </div>
+
+  <div class="card card-airways">
+    <span class="badge badge-blue">Regulación</span>
+    <h3>2. Equilibrio Ácido-Base</h3>
+    <p>El CO₂ se combina con agua para formar ácido carbónico que se disocia en H⁺ y HCO₃⁻:</p>
+    <div class="formula-display">CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻</div>
+    <p>Al eliminar CO₂, el pulmón puede regular la concentración de H⁺ plasmático. El SNC monitorea niveles de CO₂ y H⁺ en sangre arterial y LCR para ajustar la ventilación.</p>
+    <div class="analogy">
+      El pulmón actúa como la "válvula de escape" del cuerpo: si hay demasiado ácido, aumenta la ventilación para "soplar" más CO₂ y subir el pH. Como inflar un globo para liberar presión.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:10px 0;">
+    <div class="card card-muscles" style="margin-bottom:0;">
+      <span class="badge badge-purple">Función</span>
+      <h4>3. Fonación</h4>
+      <p style="font-size:.88rem;">Producción de sonidos mediante el movimiento de aire por las cuerdas vocales. El habla, el canto y demás sonidos son coordinados por el SNC.</p>
+    </div>
+    <div class="card card-amber" style="margin-bottom:0;">
+      <span class="badge badge-amber">Defensa</span>
+      <h4>4. Mecanismos de Defensa</h4>
+      <p style="font-size:.88rem;">Cada inspiración puede traer bacterias, polvo, sílice, gases tóxicos. Las vías aéreas tienen sistemas de filtrado, calentamiento, humidificación y depuración.</p>
+    </div>
+    <div class="card" style="margin-bottom:0;border-left:4px solid var(--teal);">
+      <span class="badge badge-blue">Metabolismo</span>
+      <h4>5. Metabolismo y Bioactividad</h4>
+      <p style="font-size:.88rem;">El endotelio capilar pulmonar contiene enzimas que producen, metabolizan y modifican sustancias vasoactivas circulantes (p. ej., angiotensina I → II).</p>
+    </div>
+  </div>
+
+  <!-- ANIMACIÓN: CICLO DE GASES -->
+  <h3 style="margin-top:28px;">🎬 Animación: Ciclo de Intercambio Gaseoso</h3>
+  <div class="canvas-wrap">
+    <canvas id="gasExchangeCanvas" height="320"></canvas>
+    <div class="canvas-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4fc3f7;"></div><span>O₂ (aire ambiente)</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ef9a9a;"></div><span>CO₂ (metabolismo)</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2ecc71;"></div><span>Sangre oxigenada</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div><span>Sangre venosa mixta</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;margin-top:16px;">
+    <button class="btn btn-primary" onclick="gotoSec(2)">Siguiente: Vías Aéreas →</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 2: ESTRUCTURA – VÍAS AÉREAS
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-2">
+<div class="section-inner">
+  <div class="section-tag">📚 Sección 2</div>
+  <h2>Estructura: Las Vías Aéreas</h2>
+
+  <div class="card card-airways">
+    <h3>Árbol Traqueobronquial</h3>
+    <p>El aire pasa desde nariz/boca → faringe → laringe → tráquea, y luego por <strong>10 a 23 generaciones</strong> de ramificaciones hasta los alvéolos. Cada ramificación aumenta el área de sección transversal total aunque disminuya el diámetro individual.</p>
+    <div class="analogy">
+      El árbol bronquial es como un árbol real: el tronco principal (tráquea) se divide en ramas (bronquios) que se van haciendo más pequeñas (bronquiolos) hasta llegar a las hojas (alvéolos). Aunque cada hoja es minúscula, el área total de todas las hojas es enorme.
+    </div>
+  </div>
+
+  <h3 style="margin:20px 0 14px;">🌿 Zonas del Árbol Traqueobronquial</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:20px;">
+    <div class="card card-airways" style="margin-bottom:0;">
+      <span class="badge badge-blue">Generaciones 0–16</span>
+      <h4>Zona Conductora</h4>
+      <p style="font-size:.87rem;">Tráquea → bronquios → bronquiolos terminales. <strong>Sin alvéolos</strong>, no realiza intercambio gaseoso. Constituye el <strong>espacio muerto anatómico</strong>.</p>
+      <p style="font-size:.82rem;color:var(--text-muted);">Bronquiolos (sin cartílago) son propensos al colapso; el tejido elástico alveolar los mantiene abiertos.</p>
+    </div>
+    <div class="card" style="margin-bottom:0;border-left:4px solid var(--amber);">
+      <span class="badge badge-amber">Generaciones 17–19</span>
+      <h4>Zona de Transición</h4>
+      <p style="font-size:.87rem;">Bronquiolos respiratorios. Aparecen los <strong>primeros alvéolos</strong>. Comienza el intercambio gaseoso parcial.</p>
+    </div>
+    <div class="card card-alveoli" style="margin-bottom:0;">
+      <span class="badge badge-green">Generaciones 20–23</span>
+      <h4>Zona Respiratoria</h4>
+      <p style="font-size:.87rem;">Conductos y sacos alveolares. <strong>Todo el gas intercambia</strong>. Enorme área de sección transversal (~10,000 cm²).</p>
+      <p style="font-size:.82rem;color:var(--text-muted);">Cada bronquiolo respiratorio → ~100 conductos → ~2,000 alvéolos. Un acino contiene 10-12 bronquiolos respiratorios.</p>
+    </div>
+  </div>
+
+  <!-- TABLA DE GENERACIONES -->
+  <h3>📊 Dimensiones del Árbol Bronquial</h3>
+  <div style="overflow-x:auto;">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Estructura</th><th>Generación</th><th>Diámetro (cm)</th><th>Nº Vías</th><th>Área Total (cm²)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Tráquea</td><td>0</td><td>1.80</td><td>1</td><td>2.54</td></tr>
+      <tr><td>Bronquios principales</td><td>1</td><td>1.22</td><td>2</td><td>2.33</td></tr>
+      <tr><td>Bronquios lobares</td><td>2</td><td>0.83</td><td>4</td><td>2.13</td></tr>
+      <tr><td>Bronquiolos (gral.)</td><td>5</td><td>0.35</td><td>32</td><td>3.11</td></tr>
+      <tr><td>Bronquiolos terminales</td><td>16</td><td>0.06</td><td>60,000</td><td>180.0</td></tr>
+      <tr><td>Bronquiolos respiratorios</td><td>17–19</td><td>0.05</td><td>500,000</td><td>103</td></tr>
+      <tr><td>Sacos alveolares</td><td>23</td><td>0.04</td><td>8,000,000</td><td>~10,000</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ANIMACIÓN ÁRBOL BRONQUIAL -->
+  <h3 style="margin-top:24px;">🎬 Árbol Bronquial Interactivo</h3>
+  <div class="canvas-wrap">
+    <canvas id="airwayCanvas" height="340"></canvas>
+    <div class="canvas-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#64b5f6;"></div><span>Zona conductora (G0–16)</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ffcc02;"></div><span>Zona de transición (G17–19)</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4caf50;"></div><span>Zona respiratoria (G20–23)</span></div>
+    </div>
+  </div>
+
+  <div class="card card-accent">
+    <h4>🔍 Revestimiento de las Vías Aéreas</h4>
+    <p style="font-size:.9rem;">Toda la vía respiratoria (excepto faringe anterior, tercio anterior de la nariz y unidades distales) está tapizada con <strong>células ciliadas</strong> pseudoestratificadas columnares y células caliciformes productoras de moco. En bronquiolos, las células de Clara (Células Club) reemplazan a las caliciformes y secretan surfactante, glucoproteínas, y actúan como células progenitoras.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">
+      <span class="badge badge-blue">Células ciliadas</span>
+      <span class="badge badge-green">Células caliciformes (moco)</span>
+      <span class="badge badge-amber">Células Club (bronquiolos)</span>
+      <span class="badge badge-red">Mastocitos (histamina)</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px;">
+    <button class="btn btn-outline" onclick="gotoSec(1)">← Anterior</button>
+    <button class="btn btn-primary" onclick="gotoSec(3)">Siguiente: Alvéolo-Capilar →</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 3: UNIDAD ALVÉOLO-CAPILAR
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-3" style="background:linear-gradient(180deg,#0e1520,#0b0f14);">
+<div class="section-inner">
+  <div class="section-tag">📚 Sección 3</div>
+  <h2>La Unidad Alvéolo-Capilar</h2>
+  <p style="color:var(--text-muted);">Sitio principal del intercambio gaseoso en el pulmón.</p>
+
+  <div class="card card-alveoli">
+    <h3>Datos Asombrosos 🤯</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:12px;">
+      <div style="text-align:center;padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+        <div style="font-family:var(--font-head);font-size:1.6rem;color:var(--accent2);">480 M</div>
+        <div style="font-size:.78rem;color:var(--text-muted);">Alvéolos (adulto)</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+        <div style="font-family:var(--font-head);font-size:1.6rem;color:var(--accent2);">280 B</div>
+        <div style="font-size:.78rem;color:var(--text-muted);">Capilares pulmonares</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+        <div style="font-family:var(--font-head);font-size:1.6rem;color:var(--accent2);">50–100 m²</div>
+        <div style="font-size:.78rem;color:var(--text-muted);">Área para intercambio</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+        <div style="font-family:var(--font-head);font-size:1.6rem;color:var(--accent2);">0.2–0.5 µm</div>
+        <div style="font-size:.78rem;color:var(--text-muted);">Grosor de la barrera</div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:16px;">
+      La superficie de intercambio gaseoso de tus pulmones es equivalente a ½ cancha de tenis. Todo empaquetado en un espacio del tamaño de tus pulmones. ¡La naturaleza comprime la eficiencia al máximo!
+    </div>
+  </div>
+
+  <h3 style="margin:20px 0 12px;">🔬 Células de la Superficie Alveolar</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:16px;">
+    <div class="card card-alveoli" style="margin-bottom:0;">
+      <span class="badge badge-green">Tipo I</span>
+      <h4>Neumocitos Tipo I</h4>
+      <p style="font-size:.87rem;">Células epiteliales escamosas <strong>delgadas</strong>. Cubren <strong>90–95%</strong> de la superficie aunque son menos numerosas. Permiten el intercambio gaseoso. También bombean Na⁺ y agua al intersticio.</p>
+    </div>
+    <div class="card" style="margin-bottom:0;border-left:4px solid var(--amber);">
+      <span class="badge badge-amber">Tipo II</span>
+      <h4>Neumocitos Tipo II</h4>
+      <p style="font-size:.87rem;">Células cúbicas <strong>productoras de surfactante</strong>. Son el doble en número pero cubren solo 5–10% de la superficie. También actúan como células progenitoras para los Tipo I.</p>
+    </div>
+    <div class="card card-capillary" style="margin-bottom:0;">
+      <span class="badge badge-red">Macrófagos</span>
+      <h4>Macrófagos Alveolares</h4>
+      <p style="font-size:.87rem;">Células fagocíticas libres que patrullan la superficie alveolar y fagocitan partículas inspiradas como bacterias. Primera línea de defensa inmunitaria del pulmón.</p>
+    </div>
+  </div>
+
+  <div class="card card-capillary">
+    <h3>La Barrera Alvéolo-Capilar</h3>
+    <p>La barrera de difusión consta de: <strong>(1) fluido de superficie alveolar</strong> → <strong>(2) epitelio alveolar</strong> (Tipo I) → <strong>(3) espacio intersticial</strong> + membrana basal → <strong>(4) endotelio capilar</strong> → <strong>(5) plasma</strong> → <strong>(6) eritrocito</strong></p>
+    <p>Esta barrera normalmente mide solo <strong>0.2–0.5 µm</strong> de grosor, permitiendo una difusión eficientísima. En condiciones patológicas (edema pulmonar, fibrosis) se engrosa.</p>
+    <div class="analogy">
+      Es como la pared de un globo de jabón ultra-delgado: tan fina que los gases la cruzan en milisegundos. Si el globo se moja (edema) o endurece (fibrosis), la difusión se hace más difícil.
+    </div>
+  </div>
+
+  <!-- ANIMACIÓN ALVÉOLO -->
+  <h3 style="margin-top:20px;">🎬 Animación: Difusión en la Unidad Alvéolo-Capilar</h3>
+  <div class="canvas-wrap">
+    <canvas id="alveolCanvas" height="300"></canvas>
+    <div class="canvas-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4fc3f7;"></div><span>Moléculas de O₂</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ef9a9a;"></div><span>Moléculas de CO₂</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(46,204,113,.3);"></div><span>Alvéolo</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(192,57,43,.3);"></div><span>Capilar</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px;">
+    <button class="btn btn-outline" onclick="gotoSec(2)">← Anterior</button>
+    <button class="btn btn-primary" onclick="gotoSec(4)">Siguiente: Pared Torácica →</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 4: PARED TORÁCICA Y MÚSCULOS
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-4">
+<div class="section-inner">
+  <div class="section-tag">📚 Sección 4</div>
+  <h2>Pared Torácica y Músculos Respiratorios</h2>
+
+  <div class="card card-muscles">
+    <h3>Componentes de la Pared Torácica</h3>
+    <p>Los pulmones <strong>no pueden inflarse solos</strong>. La fuerza debe ser provista por los músculos respiratorios a través de la pared torácica. Los componentes principales son:</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px;">
+      <div style="background:var(--surface);border-radius:10px;padding:14px;border:1px solid var(--border);">
+        <div style="color:var(--muscles);font-weight:700;margin-bottom:6px;">🦴 Caja Torácica</div>
+        <div style="font-size:.85rem;color:var(--text-muted);">Costillas, esternón y columna vertebral. Estructura rígida que protege los pulmones.</div>
+      </div>
+      <div style="background:var(--surface);border-radius:10px;padding:14px;border:1px solid var(--border);">
+        <div style="color:var(--muscles);font-weight:700;margin-bottom:6px;">💪 Diafragma</div>
+        <div style="font-size:.85rem;color:var(--text-muted);">Músculo principal de la inspiración. Su contracción aumenta el volumen torácico al descender.</div>
+      </div>
+      <div style="background:var(--surface);border-radius:10px;padding:14px;border:1px solid var(--border);">
+        <div style="color:var(--muscles);font-weight:700;margin-bottom:6px;">🔀 Intercostales</div>
+        <div style="font-size:.85rem;color:var(--text-muted);">Externos (inspiración) e internos (espiración forzada). Elevan y deprimen las costillas.</div>
+      </div>
+      <div style="background:var(--surface);border-radius:10px;padding:14px;border:1px solid var(--border);">
+        <div style="color:var(--muscles);font-weight:700;margin-bottom:6px;">🫁 Pleuras</div>
+        <div style="font-size:.85rem;color:var(--text-muted);">Visceral (cubre el pulmón) y parietal (cubre la pared). El espacio pleural transmite presiones.</div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:16px;">
+      Los pulmones son como globos dentro de una caja. El diafragma es como el pistón de una jeringa: al bajar, crea vacío dentro del tórax, y el aire entra por la "boquilla" (tráquea). La espiración normal es pasiva, como soltar el émbolo de la jeringa.
+    </div>
+  </div>
+
+  <div class="card card-accent">
+    <h3>Músculos Respiratorios Accesorios</h3>
+    <p style="font-size:.9rem;">Además del diafragma e intercostales, participan en la respiración forzada:</p>
+    <ul style="font-size:.88rem;padding-left:18px;color:var(--text-muted);">
+      <li><strong style="color:var(--text);">Músculos abdominales</strong> (recto abdominal, oblicuos): espiración forzada</li>
+      <li><strong style="color:var(--text);">Músculos paraesternales intercartilaginosos</strong>: inspiración</li>
+      <li><strong style="color:var(--text);">Escalenos y esternocleidomastoideo</strong>: inspiración accesoria (ejercicio, disnea)</li>
+    </ul>
+  </div>
+
+  <!-- ANIMACIÓN DIAFRAGMA -->
+  <h3 style="margin-top:20px;">🎬 Animación: Ciclo Respiratorio</h3>
+  <div class="canvas-wrap">
+    <canvas id="breathCanvas" height="280"></canvas>
+    <div class="canvas-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#9b59b6;"></div><span>Diafragma</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2ecc71;"></div><span>Pulmones</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3498db;"></div><span>Flujo de aire</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--blue);">
+    <h4>🧠 Control Nervioso</h4>
+    <p style="font-size:.9rem;">El SNC (bulbo raquídeo y protuberancia) inicia el ritmo respiratorio. Las señales viajan por la médula espinal a los nervios frénicos (C3-C5 → diafragma) e intercostales. Los quimiorreceptores centrales y periféricos ajustan la frecuencia y profundidad según PCO₂, PO₂ y pH.</p>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px;">
+    <button class="btn btn-outline" onclick="gotoSec(3)">← Anterior</button>
+    <button class="btn btn-primary" onclick="gotoSec(5)">Siguiente: Leyes de Gases →</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 5: LEYES DE GASES Y CALCULADORAS
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-5" style="background:linear-gradient(180deg,#0b0f14,#0e1520);">
+<div class="section-inner">
+  <div class="section-tag">⚗️ Sección 5</div>
+  <h2>Leyes de los Gases y Ecuaciones Clave</h2>
+  <p style="color:var(--text-muted);">Apéndice del Libro: Símbolos, Leyes y Ecuaciones Frecuentes</p>
+
+  <!-- SÍMBOLOS -->
+  <div class="card card-accent" style="margin-bottom:20px;">
+    <h3>Símbolos en Fisiología Respiratoria</h3>
+    <div class="symbol-grid" style="margin-top:10px;">
+      <div class="symbol-item"><span class="symbol-key">P</span><span>Presión parcial (mmHg)</span></div>
+      <div class="symbol-item"><span class="symbol-key">V̇</span><span>Flujo de gas (mL/min)</span></div>
+      <div class="symbol-item"><span class="symbol-key">Q̇</span><span>Flujo sanguíneo (mL/min)</span></div>
+      <div class="symbol-item"><span class="symbol-key">F</span><span>Fracción concentración</span></div>
+      <div class="symbol-item"><span class="symbol-key">C</span><span>Contenido en sangre (mL/100mL)</span></div>
+      <div class="symbol-item"><span class="symbol-key">S</span><span>Saturación (%)</span></div>
+      <div class="symbol-item"><span class="symbol-key">A</span><span>Alveolar</span></div>
+      <div class="symbol-item"><span class="symbol-key">a</span><span>Arterial</span></div>
+      <div class="symbol-item"><span class="symbol-key">v̄</span><span>Venosa mixta</span></div>
+      <div class="symbol-item"><span class="symbol-key">T</span><span>Tidal (Corriente)</span></div>
+      <div class="symbol-item"><span class="symbol-key">D</span><span>Espacio muerto</span></div>
+      <div class="symbol-item"><span class="symbol-key">I</span><span>Inspirado</span></div>
+    </div>
+  </div>
+
+  <!-- TABS LEYES -->
+  <h3 style="margin-bottom:14px;">📐 Leyes del Comportamiento de los Gases</h3>
+  <div class="tab-wrap">
+    <button class="tab-btn active" onclick="switchTab('gas',this,'t-boyle')">Boyle</button>
+    <button class="tab-btn" onclick="switchTab('gas',this,'t-charles')">Charles</button>
+    <button class="tab-btn" onclick="switchTab('gas',this,'t-dalton')">Dalton</button>
+    <button class="tab-btn" onclick="switchTab('gas',this,'t-ideal')">Gas Ideal</button>
+    <button class="tab-btn" onclick="switchTab('gas',this,'t-henry')">Henry</button>
+    <button class="tab-btn" onclick="switchTab('gas',this,'t-fick')">Fick</button>
+    <button class="tab-btn" onclick="switchTab('gas',this,'t-graham')">Graham</button>
+  </div>
+
+  <!-- Boyle -->
+  <div class="tab-panel active" id="t-boyle">
+    <div class="card card-airways">
+      <span class="badge badge-blue">Ley de Boyle</span>
+      <p style="margin-top:8px;">A temperatura constante, el producto presión-volumen es constante. Al comprimir un gas su presión aumenta y viceversa.</p>
+      <div class="formula-display">P₁ × V₁ = P₂ × V₂ &nbsp;(T constante)</div>
+      <div class="analogy">Como apachurrar un globo: si empujas el lado izquierdo (menor volumen), la presión interior aumenta y el globo empuja hacia el otro lado.</div>
+      <h4 style="margin-top:16px;">🧮 Calculadora</h4>
+      <div class="calc-grid">
+        <div class="calc-field"><label>P₁ (mmHg)</label><input id="b-p1" type="number" value="760" min="1"></div>
+        <div class="calc-field"><label>V₁ (mL)</label><input id="b-v1" type="number" value="500" min="1"></div>
+        <div class="calc-field"><label>V₂ (mL)</label><input id="b-v2" type="number" value="250" min="1"></div>
+      </div>
+      <button class="btn btn-calc" onclick="calcBoyle()">Calcular P₂ →</button>
+      <div class="result-box" id="res-boyle" style="display:none;">
+        <div class="result-label">P₂ resultante</div>
+        <div class="result-value" id="val-boyle">—</div>
+        <div class="result-label">mmHg</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charles -->
+  <div class="tab-panel" id="t-charles">
+    <div class="card card-airways">
+      <span class="badge badge-blue">Ley de Charles / Gay-Lussac</span>
+      <p style="margin-top:8px;">A presión constante, el volumen de un gas es directamente proporcional a su temperatura absoluta (Kelvin).</p>
+      <div class="formula-display">V₁/T₁ = V₂/T₂ &nbsp;(P constante)</div>
+      <div class="analogy">Como una bolsa de papas fritas: se infla en el sol (calor → más volumen) y se aplana en el frío. Importante al corregir volúmenes BTPS ↔ ATPS.</div>
+      <h4 style="margin-top:16px;">🧮 Calculadora</h4>
+      <div class="calc-grid">
+        <div class="calc-field"><label>V₁ (mL)</label><input id="c-v1" type="number" value="500" min="1"></div>
+        <div class="calc-field"><label>T₁ (K)</label><input id="c-t1" type="number" value="273" min="1"></div>
+        <div class="calc-field"><label>T₂ (K)</label><input id="c-t2" type="number" value="310" min="1"></div>
+      </div>
+      <button class="btn btn-calc" onclick="calcCharles()">Calcular V₂ →</button>
+      <div class="result-box" id="res-charles" style="display:none;">
+        <div class="result-label">V₂ resultante</div>
+        <div class="result-value" id="val-charles">—</div>
+        <div class="result-label">mL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dalton -->
+  <div class="tab-panel" id="t-dalton">
+    <div class="card card-airways">
+      <span class="badge badge-blue">Ley de Dalton</span>
+      <p style="margin-top:8px;">En una mezcla gaseosa, la presión de cada gas es independiente de las demás. La presión total es la suma de las parciales.</p>
+      <div class="formula-display">P<sub>total</sub> = P<sub>H₂O</sub> + P<sub>O₂</sub> + P<sub>CO₂</sub> + P<sub>N₂</sub></div>
+      <div class="formula-display">P<sub>gas</sub> = F<sub>gas</sub> × P<sub>total</sub></div>
+      <div class="analogy">En un cuarto con 4 personas, cada persona "ocupa" su propio espacio sin importar las demás. La presión del O₂ en el aire es simplemente su fracción (21%) × presión barométrica.</div>
+      <h4 style="margin-top:16px;">🧮 Calculadora: PIO₂</h4>
+      <div class="calc-grid">
+        <div class="calc-field"><label>FiO₂ (fracción)</label><input id="d-fio2" type="number" value="0.21" step="0.01" min="0.01" max="1"></div>
+        <div class="calc-field"><label>Pb (mmHg)</label><input id="d-pb" type="number" value="760" min="1"></div>
+        <div class="calc-field"><label>PH₂O (mmHg)</label><input id="d-ph2o" type="number" value="47" min="0"></div>
+      </div>
+      <button class="btn btn-calc" onclick="calcDalton()">Calcular PIO₂ →</button>
+      <div class="result-box" id="res-dalton" style="display:none;">
+        <div class="result-label">PIO₂ (presión inspirada de O₂)</div>
+        <div class="result-value" id="val-dalton">—</div>
+        <div class="result-label">mmHg</div>
+        <div id="interp-dalton" style="font-size:.82rem;color:var(--text-muted);margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ideal Gas -->
+  <div class="tab-panel" id="t-ideal">
+    <div class="card card-airways">
+      <span class="badge badge-blue">Ley del Gas Ideal</span>
+      <p style="margin-top:8px;">Relaciona presión, volumen, número de moles y temperatura de un gas ideal.</p>
+      <div class="formula-display">PV = nRT</div>
+      <p style="font-size:.88rem;color:var(--text-muted);">Hipótesis de Avogadro: 1 mol de cualquier gas a 0°C y 760 mmHg ocupa 22.4 L y contiene 6.02×10²³ moléculas.</p>
+      <div class="analogy">Como el precio de una habitación de hotel: depende de cuántas personas hay (n), la temperatura del lugar (T) y la "tarifa" (R). La presión es el costo por habitación. Si metes más personas o subes el termostato, el costo sube.</div>
+      <h4 style="margin-top:16px;">🧮 Calculadora de n (moles)</h4>
+      <div class="calc-grid">
+        <div class="calc-field"><label>P (atm)</label><input id="ig-p" type="number" value="1" step="0.01" min="0.01"></div>
+        <div class="calc-field"><label>V (L)</label><input id="ig-v" type="number" value="5" step="0.1" min="0.01"></div>
+        <div class="calc-field"><label>T (K)</label><input id="ig-t" type="number" value="310" min="1"></div>
+      </div>
+      <button class="btn btn-calc" onclick="calcIdeal()">Calcular moles (n) →</button>
+      <div class="result-box" id="res-ideal" style="display:none;">
+        <div class="result-label">n (moles de gas)</div>
+        <div class="result-value" id="val-ideal">—</div>
+        <div class="result-label">mol</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Henry -->
+  <div class="tab-panel" id="t-henry">
+    <div class="card card-airways">
+      <span class="badge badge-blue">Ley de Henry</span>
+      <p style="margin-top:8px;">El peso de un gas absorbido por un líquido es proporcional a la presión del gas y su coeficiente de solubilidad.</p>
+      <div class="formula-display">C<sub>gas</sub> = α × P<sub>gas</sub></div>
+      <p style="font-size:.88rem;margin-top:10px;">El O₂ se disuelve en plasma según su coeficiente de solubilidad:</p>
+      <div class="formula-display">0.003 mL O₂ / 100 mL sangre / mmHg PaO₂</div>
+      <div class="analogy">Es la ley de la "burbuja de soda": más presión de CO₂ sobre el líquido → más CO₂ disuelto. Al destapar la botella (bajar presión), el gas sale. Relevante en el buceo y en la toxicidad por oxígeno.</div>
+      <h4 style="margin-top:16px;">🧮 Calculadora: O₂ Disuelto</h4>
+      <div class="calc-grid">
+        <div class="calc-field"><label>PaO₂ (mmHg)</label><input id="h-pao2" type="number" value="100" min="0"></div>
+      </div>
+      <button class="btn btn-calc" onclick="calcHenry()">Calcular O₂ disuelto →</button>
+      <div class="result-box" id="res-henry" style="display:none;">
+        <div class="result-label">O₂ disuelto en plasma</div>
+        <div class="result-value" id="val-henry">—</div>
+        <div class="result-label">mL O₂/100 mL sangre</div>
+        <div id="interp-henry" style="font-size:.82rem;color:var(--text-muted);margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fick -->
+  <div class="tab-panel" id="t-fick">
+    <div class="card card-alveoli">
+      <span class="badge badge-green">Ley de Fick (Difusión)</span>
+      <p style="margin-top:8px;">La tasa de difusión de un gas es proporcional al área, al coeficiente de difusión y al gradiente de presión, e inversamente proporcional al grosor de la membrana.</p>
+      <div class="formula-display">V̇<sub>gas</sub> = (A × D × ΔP) / T</div>
+      <p style="font-size:.87rem;margin-top:6px;">Donde D ∝ solubilidad / √(peso molecular). El CO₂ tiene 20× mayor solubilidad que el O₂, compensando su mayor peso molecular.</p>
+      <div class="analogy">Imagina gotear agua a través de una esponja: si la esponja es grande (área ↑) y delgada (grosor ↓), fluye más rápido. Si la diferencia de presión (altura del agua) es mayor, fluye más. El coeficiente D es qué tan "porosa" es la membrana para ese gas.</div>
+      <h4 style="margin-top:16px;">🧮 Calculadora</h4>
+      <div class="calc-grid">
+        <div class="calc-field"><label>Área (cm²)</label><input id="f-a" type="number" value="7000000" min="1"></div>
+        <div class="calc-field"><label>D (coef. difusión)</label><input id="f-d" type="number" value="0.00003" step="0.000001" min="0.000001"></div>
+        <div class="calc-field"><label>P₁ - P₂ (mmHg)</label><input id="f-dp" type="number" value="60" min="0"></div>
+        <div class="calc-field"><label>Grosor T (cm)</label><input id="f-t" type="number" value="0.00003" step="0.000001" min="0.000001"></div>
+      </div>
+      <button class="btn btn-calc" onclick="calcFick()">Calcular V̇gas →</button>
+      <div class="result-box" id="res-fick" style="display:none;">
+        <div class="result-label">Tasa de difusión</div>
+        <div class="result-value" id="val-fick">—</div>
+        <div class="result-label">mL/min (aproximado)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graham -->
+  <div class="tab-panel" id="t-graham">
+    <div class="card card-airways">
+      <span class="badge badge-blue">Ley de Graham</span>
+      <p style="margin-top:8px;">La tasa de difusión de un gas en fase gaseosa es inversamente proporcional a la raíz cuadrada de su peso molecular.</p>
+      <div class="formula-display">Tasa₁/Tasa₂ = √(PM₂ / PM₁)</div>
+      <p style="font-size:.87rem;margin-top:8px;">Comparación O₂ (PM=32) vs CO₂ (PM=44):</p>
+      <div class="formula-display">Tasa<sub>O₂</sub>/Tasa<sub>CO₂</sub> = √(44/32) ≈ 1.17</div>
+      <div class="analogy">Los gases ligeros son como autos compactos y los pesados como camiones: los compactos viajan más rápido por la misma autopista. En la fase gaseosa, el O₂ difunde ligeramente más rápido que el CO₂ por esta ley.</div>
+      <h4 style="margin-top:16px;">🧮 Calculadora</h4>
+      <div class="calc-grid">
+        <div class="calc-field"><label>Peso molecular gas 1</label>
+          <select id="g-gas1">
+            <option value="32">O₂ (PM=32)</option>
+            <option value="44">CO₂ (PM=44)</option>
+            <option value="28">CO (PM=28)</option>
+            <option value="2">H₂ (PM=2)</option>
+          </select>
+        </div>
+        <div class="calc-field"><label>Peso molecular gas 2</label>
+          <select id="g-gas2">
+            <option value="44">CO₂ (PM=44)</option>
+            <option value="32">O₂ (PM=32)</option>
+            <option value="28">CO (PM=28)</option>
+            <option value="2">H₂ (PM=2)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-calc" onclick="calcGraham()">Comparar tasas →</button>
+      <div class="result-box" id="res-graham" style="display:none;">
+        <div class="result-label">Gas 1 difunde ___× más rápido que Gas 2</div>
+        <div class="result-value" id="val-graham">—</div>
+        <div class="result-label" id="interp-graham"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECUACIÓN ALVEOLAR -->
+  <hr class="divider">
+  <h3 style="margin-bottom:14px;">🧮 Ecuación del Gas Alveolar (Ecuación A-a)</h3>
+  <div class="card card-alveoli">
+    <div class="formula-display">PAO₂ = FiO₂ × (Pb − PH₂O) − PaCO₂/R</div>
+    <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:14px;">Calcula la presión parcial de O₂ en los alvéolos. R = cociente respiratorio (normalmente 0.8)</p>
+    <div class="calc-grid">
+      <div class="calc-field"><label>FiO₂ (fracción)</label><input id="aa-fio2" type="number" value="0.21" step="0.01" min="0.01" max="1"></div>
+      <div class="calc-field"><label>Pb presión barométrica (mmHg)</label><input id="aa-pb" type="number" value="760" min="1"></div>
+      <div class="calc-field"><label>PH₂O (mmHg)</label><input id="aa-ph2o" type="number" value="47" min="0"></div>
+      <div class="calc-field"><label>PaCO₂ arterial (mmHg)</label><input id="aa-paco2" type="number" value="40" min="1"></div>
+      <div class="calc-field"><label>R (cociente respiratorio)</label><input id="aa-r" type="number" value="0.8" step="0.1" min="0.1" max="1.5"></div>
+    </div>
+    <button class="btn btn-calc" onclick="calcAlveolar()">Calcular PAO₂ →</button>
+    <div class="result-box" id="res-alv" style="display:none;">
+      <div class="result-label">PAO₂ alveolar</div>
+      <div class="result-value" id="val-alv">—</div>
+      <div class="result-label">mmHg</div>
+      <div id="interp-alv" style="font-size:.83rem;color:var(--text-muted);margin-top:8px;"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px;">
+    <button class="btn btn-outline" onclick="gotoSec(4)">← Anterior</button>
+    <button class="btn btn-primary" onclick="gotoSec(6)">Siguiente: Laboratorio →</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 6: LABORATORIO VIRTUAL
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-6">
+<div class="section-inner">
+  <div class="section-tag">🧪 Laboratorio Virtual</div>
+  <h2>Laboratorio de Fisiología Pulmonar</h2>
+  <p style="color:var(--text-muted);">Modifica parámetros con los controles o usa los escenarios predefinidos. El laboratorio calculará la PAO₂ y generará una interpretación clínica automática.</p>
+
+  <!-- PRESETS -->
+  <h3 style="margin-bottom:12px;">⚡ Escenarios Rápidos</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;">
+    <button class="btn-preset active" id="preset-normal" onclick="applyPreset('normal',this)">🟢 Normal</button>
+    <button class="btn-preset" id="preset-altitude" onclick="applyPreset('altitude',this)">🏔️ Altura (5000m)</button>
+    <button class="btn-preset" id="preset-copd" onclick="applyPreset('copd',this)">🌬️ EPOC</button>
+    <button class="btn-preset" id="preset-o2" onclick="applyPreset('o2',this)">💊 O₂ Suplementario</button>
+    <button class="btn-preset" id="preset-hyper" onclick="applyPreset('hyper',this)">⚡ Hiperventilación</button>
+    <button class="btn-preset" id="preset-hypo" onclick="applyPreset('hypo',this)">😴 Hipoventilación</button>
+    <button class="btn-preset" id="preset-ards" onclick="applyPreset('ards',this)">🔴 SDRA</button>
+    <button class="btn-preset" id="preset-dive" onclick="applyPreset('dive',this)">🤿 Buceo (30m)</button>
+  </div>
+
+  <!-- SLIDERS -->
+  <div class="card card-accent">
+    <h3 style="margin-bottom:16px;">🎛️ Controles</h3>
+    <div class="slider-group">
+      <div class="slider-label"><span>FiO₂ (Fracción inspirada de O₂)</span><span class="slider-val" id="disp-fio2">0.21</span></div>
+      <input type="range" id="sl-fio2" min="0.10" max="1.00" step="0.01" value="0.21" oninput="updateLab()">
+    </div>
+    <div class="slider-group">
+      <div class="slider-label"><span>Pb (Presión barométrica, mmHg)</span><span class="slider-val" id="disp-pb">760</span></div>
+      <input type="range" id="sl-pb" min="380" max="800" step="5" value="760" oninput="updateLab()">
+    </div>
+    <div class="slider-group">
+      <div class="slider-label"><span>PaCO₂ arterial (mmHg)</span><span class="slider-val" id="disp-paco2">40</span></div>
+      <input type="range" id="sl-paco2" min="10" max="80" step="1" value="40" oninput="updateLab()">
+    </div>
+    <div class="slider-group">
+      <div class="slider-label"><span>Cociente respiratorio R</span><span class="slider-val" id="disp-r">0.80</span></div>
+      <input type="range" id="sl-r" min="0.60" max="1.20" step="0.01" value="0.80" oninput="updateLab()">
+    </div>
+    <div class="slider-group">
+      <div class="slider-label"><span>Grosor barrera de difusión (µm)</span><span class="slider-val" id="disp-barrier">0.35</span></div>
+      <input type="range" id="sl-barrier" min="0.2" max="5.0" step="0.05" value="0.35" oninput="updateLab()">
+    </div>
+  </div>
+
+  <!-- RESULTADOS -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0;">
+    <div class="result-box">
+      <div class="result-label">PAO₂</div>
+      <div class="result-value" id="lab-pao2">100</div>
+      <div class="result-label">mmHg</div>
+    </div>
+    <div class="result-box" id="lab-pio2-box">
+      <div class="result-label">PIO₂</div>
+      <div class="result-value" id="lab-pio2">150</div>
+      <div class="result-label">mmHg</div>
+    </div>
+    <div class="result-box">
+      <div class="result-label">Gradiente A-a*</div>
+      <div class="result-value" id="lab-grad">10</div>
+      <div class="result-label">mmHg (estimado)</div>
+    </div>
+  </div>
+
+  <!-- INTERPRETACIÓN -->
+  <div id="lab-clinical" class="clinical-box clinical-normal">
+    <div style="font-weight:700;font-size:1rem;margin-bottom:8px;" id="lab-dx">✅ Normal</div>
+    <div id="lab-text" style="font-size:.9rem;"></div>
+    <div id="lab-mechanism" style="font-size:.85rem;color:var(--text-muted);margin-top:8px;"></div>
+  </div>
+
+  <!-- CANVAS LAB -->
+  <div class="canvas-wrap" style="margin-top:20px;">
+    <canvas id="labCanvas" height="200"></canvas>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px;">
+    <button class="btn btn-outline" onclick="gotoSec(5)">← Anterior</button>
+    <button class="btn btn-primary" onclick="gotoSec(7)">Siguiente: Quiz →</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 7: QUIZ
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-7" style="background:linear-gradient(180deg,#0b0f14,#0e1520);">
+<div class="section-inner">
+  <div class="section-tag">📝 Quiz</div>
+  <h2>Preguntas de Comprensión</h2>
+  <p style="color:var(--text-muted);margin-bottom:8px;">17 preguntas sobre el Capítulo 1 y el Apéndice. Haz clic en la opción correcta para ver la retroalimentación inmediata.</p>
+  <div id="quiz-score-live" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+    <span style="font-size:.85rem;color:var(--text-muted);">Progreso:</span>
+    <div style="flex:1;background:var(--border);border-radius:50px;height:8px;overflow:hidden;">
+      <div id="quiz-prog-bar" style="height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:50px;width:0%;transition:width .4s;"></div>
+    </div>
+    <span id="quiz-prog-text" style="font-size:.88rem;color:var(--accent);font-weight:700;">0 / 17</span>
+  </div>
+  <div id="quiz-container"></div>
+  <div id="review-section" style="margin-top:32px;">
+    <h3 style="margin-bottom:16px;">📋 Revisión de Respuestas</h3>
+    <div id="review-container"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;margin-top:24px;flex-wrap:wrap;gap:10px;">
+    <button class="btn btn-outline" onclick="gotoSec(6)">← Anterior</button>
+    <button class="btn btn-primary" id="btn-finish" style="display:none;" onclick="gotoSec(8)">Ver Evaluación Final →</button>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 8: EVALUACIÓN FINAL
+═══════════════════════════════════════════════ -->
+<section class="section" id="sec-8">
+<div class="section-inner" style="text-align:center;">
+  <div class="section-tag" style="display:inline-flex;">🏆 Evaluación Final</div>
+  <h2 style="margin-top:12px;">¡Tu Resultado!</h2>
+
+  <div class="score-circle" id="final-score-circle" style="margin-top:28px;">
+    <div class="score-inner">
+      <div class="score-num" id="final-num">—</div>
+      <div class="score-den" id="final-den">/ 17</div>
+    </div>
+  </div>
+
+  <div class="motivational" id="motivational-msg">Completa el quiz para ver tu puntuación</div>
+  <div id="score-pct" style="color:var(--text-muted);font-size:.95rem;margin-bottom:20px;"></div>
+
+  <!-- BARRA DE DESGLOSE -->
+  <div id="score-breakdown" class="card" style="text-align:left;max-width:500px;margin:0 auto 24px;">
+    <h4 style="margin-bottom:14px;">📊 Desglose por Tema</h4>
+    <div id="breakdown-content"></div>
+  </div>
+
+  <div class="card card-accent" style="max-width:600px;margin:0 auto 24px;text-align:left;">
+    <h4>📚 Conceptos Clave para Repasar</h4>
+    <ul style="padding-left:18px;font-size:.88rem;color:var(--text-muted);">
+      <li>Las <strong style="color:var(--text);">5 funciones</strong> del SR: intercambio gaseoso, ácido-base, fonación, defensa pulmonar, metabolismo</li>
+      <li>Las <strong style="color:var(--text);">3 zonas</strong>: conductora (G0-16), transición (G17-19), respiratoria (G20-23)</li>
+      <li>La <strong style="color:var(--text);">barrera de difusión</strong> (0.2-0.5 µm): epitelio tipo I + intersticio + endotelio</li>
+      <li>Ley de <strong style="color:var(--text);">Fick</strong>: V̇gas ∝ A×D×ΔP / T</li>
+      <li>Ecuación del <strong style="color:var(--text);">gas alveolar</strong>: PAO₂ = FiO₂(Pb-PH₂O) - PaCO₂/R</li>
+      <li>Ley de <strong style="color:var(--text);">Dalton</strong>: Pgas = Fgas × Ptotal</li>
+    </ul>
+  </div>
+
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="gotoSec(0)">🏠 Volver al Inicio</button>
+    <button class="btn btn-outline" onclick="resetQuiz()">🔄 Reiniciar Quiz</button>
+  </div>
+</div>
+</section>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+const totalSecs = 9;
+let currentSec = 0;
+
+function gotoSec(n){
+  document.getElementById(`sec-${n}`).scrollIntoView({behavior:'smooth'});
+  updateProgress(n);
+}
+
+function updateProgress(n){
+  currentSec = n;
+  const pct = Math.round((n/(totalSecs-1))*100);
+  document.getElementById('prog-bar').style.width = pct+'%';
+  document.getElementById('prog-pct').textContent = `Sección ${n+1} de ${totalSecs}`;
+  document.querySelectorAll('.nav-dot').forEach((d,i)=>{
+    d.classList.toggle('active', i===n);
+  });
+}
+
+// Scroll spy
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      const n = parseInt(id.split('-')[1]);
+      if(!isNaN(n)) updateProgress(n);
+    }
+  });
+},{threshold:0.4});
+for(let i=0;i<totalSecs;i++){
+  const el = document.getElementById(`sec-${i}`);
+  if(el) observer.observe(el);
+}
+
+// ═══════════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════════
+function switchTab(group, btn, panelId){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════════
+// CALCULADORAS
+// ═══════════════════════════════════════════════════════════
+function showResult(id, val, extra=''){
+  const el = document.getElementById(id);
+  el.style.display='block';
+  document.getElementById(id.replace('res-','val-')).textContent = val;
+  if(extra) document.getElementById('interp-'+id.replace('res-','')) .innerHTML = extra;
+}
+
+function calcBoyle(){
+  const p1=parseFloat(document.getElementById('b-p1').value);
+  const v1=parseFloat(document.getElementById('b-v1').value);
+  const v2=parseFloat(document.getElementById('b-v2').value);
+  if(!p1||!v1||!v2)return;
+  const p2=(p1*v1/v2).toFixed(1);
+  document.getElementById('res-boyle').style.display='block';
+  document.getElementById('val-boyle').textContent=p2+' mmHg';
+}
+function calcCharles(){
+  const v1=parseFloat(document.getElementById('c-v1').value);
+  const t1=parseFloat(document.getElementById('c-t1').value);
+  const t2=parseFloat(document.getElementById('c-t2').value);
+  if(!v1||!t1||!t2)return;
+  const v2=(v1*t2/t1).toFixed(1);
+  document.getElementById('res-charles').style.display='block';
+  document.getElementById('val-charles').textContent=v2+' mL';
+}
+function calcDalton(){
+  const fio2=parseFloat(document.getElementById('d-fio2').value);
+  const pb=parseFloat(document.getElementById('d-pb').value);
+  const ph2o=parseFloat(document.getElementById('d-ph2o').value);
+  const pio2=(fio2*(pb-ph2o)).toFixed(1);
+  document.getElementById('res-dalton').style.display='block';
+  document.getElementById('val-dalton').textContent=pio2;
+  let interp='';
+  if(pio2>140) interp='✅ Normal (nivel del mar, aire ambiente)';
+  else if(pio2>90) interp='⚠️ Reducido (posible altura moderada)';
+  else interp='🔴 Severamente reducido (gran altitud o FiO₂ baja)';
+  document.getElementById('interp-dalton').innerHTML=interp;
+}
+function calcIdeal(){
+  const p=parseFloat(document.getElementById('ig-p').value);
+  const v=parseFloat(document.getElementById('ig-v').value);
+  const t=parseFloat(document.getElementById('ig-t').value);
+  const R=0.08206;
+  const n=(p*v/(R*t)).toFixed(4);
+  document.getElementById('res-ideal').style.display='block';
+  document.getElementById('val-ideal').textContent=n+' mol';
+}
+function calcHenry(){
+  const pao2=parseFloat(document.getElementById('h-pao2').value);
+  const dissolved=(pao2*0.003).toFixed(2);
+  document.getElementById('res-henry').style.display='block';
+  document.getElementById('val-henry').textContent=dissolved;
+  const total=(1.34*15*0.98+parseFloat(dissolved)).toFixed(1);
+  document.getElementById('interp-henry').innerHTML=`O₂ disuelto representa ~${(dissolved/total*100).toFixed(1)}% del O₂ total en sangre (resto = unido a Hb)`;
+}
+function calcFick(){
+  const a=parseFloat(document.getElementById('f-a').value);
+  const d=parseFloat(document.getElementById('f-d').value);
+  const dp=parseFloat(document.getElementById('f-dp').value);
+  const t=parseFloat(document.getElementById('f-t').value);
+  const v=(a*d*dp/t).toFixed(0);
+  document.getElementById('res-fick').style.display='block';
+  document.getElementById('val-fick').textContent=v;
+}
+function calcGraham(){
+  const pm1=parseFloat(document.getElementById('g-gas1').value);
+  const pm2=parseFloat(document.getElementById('g-gas2').value);
+  const ratio=Math.sqrt(pm2/pm1).toFixed(3);
+  document.getElementById('res-graham').style.display='block';
+  document.getElementById('val-graham').textContent=ratio+'×';
+  const g1=document.getElementById('g-gas1');
+  const g2=document.getElementById('g-gas2');
+  const t1=g1.options[g1.selectedIndex].text.split(' ')[0];
+  const t2=g2.options[g2.selectedIndex].text.split(' ')[0];
+  document.getElementById('interp-graham').textContent=`${t1} difunde ${ratio}× más rápido que ${t2} (en fase gaseosa)`;
+}
+function calcAlveolar(){
+  const fio2=parseFloat(document.getElementById('aa-fio2').value);
+  const pb=parseFloat(document.getElementById('aa-pb').value);
+  const ph2o=parseFloat(document.getElementById('aa-ph2o').value);
+  const paco2=parseFloat(document.getElementById('aa-paco2').value);
+  const r=parseFloat(document.getElementById('aa-r').value);
+  const pao2=(fio2*(pb-ph2o)-paco2/r).toFixed(1);
+  document.getElementById('res-alv').style.display='block';
+  document.getElementById('val-alv').textContent=pao2;
+  let interp='';
+  if(pao2>90) interp='✅ PAO₂ normal (aire ambiente, nivel del mar)';
+  else if(pao2>60) interp='⚠️ PAO₂ moderadamente reducida';
+  else if(pao2>40) interp='🔴 PAO₂ significativamente reducida — hipoxemia alveolar';
+  else interp='❌ PAO₂ crítica — insuficiencia respiratoria grave';
+  document.getElementById('interp-alv').innerHTML=interp;
+}
+
+// ═══════════════════════════════════════════════════════════
+// LABORATORIO VIRTUAL
+// ═══════════════════════════════════════════════════════════
+const presets = {
+  normal:   {fio2:0.21, pb:760, paco2:40, r:0.80, barrier:0.35, label:'Normal'},
+  altitude: {fio2:0.21, pb:404, paco2:30, r:0.80, barrier:0.35, label:'Altura 5000m'},
+  copd:     {fio2:0.21, pb:760, paco2:55, r:0.80, barrier:0.60, label:'EPOC'},
+  o2:       {fio2:0.50, pb:760, paco2:40, r:0.80, barrier:0.35, label:'O₂ Suplementario'},
+  hyper:    {fio2:0.21, pb:760, paco2:25, r:0.80, barrier:0.35, label:'Hiperventilación'},
+  hypo:     {fio2:0.21, pb:760, paco2:60, r:0.80, barrier:0.35, label:'Hipoventilación'},
+  ards:     {fio2:0.80, pb:760, paco2:50, r:0.80, barrier:3.50, label:'SDRA'},
+  dive:     {fio2:0.21, pb:2280, paco2:40, r:0.80, barrier:0.35, label:'Buceo 30m'},
+};
+function applyPreset(key, btn){
+  const p = presets[key];
+  document.getElementById('sl-fio2').value = p.fio2;
+  document.getElementById('sl-pb').value = p.pb;
+  document.getElementById('sl-paco2').value = p.paco2;
+  document.getElementById('sl-r').value = p.r;
+  document.getElementById('sl-barrier').value = p.barrier;
+  document.querySelectorAll('.btn-preset').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  updateLab();
+}
+function updateLab(){
+  const fio2=parseFloat(document.getElementById('sl-fio2').value);
+  const pb=parseFloat(document.getElementById('sl-pb').value);
+  const paco2=parseFloat(document.getElementById('sl-paco2').value);
+  const r=parseFloat(document.getElementById('sl-r').value);
+  const barrier=parseFloat(document.getElementById('sl-barrier').value);
+  document.getElementById('disp-fio2').textContent=fio2.toFixed(2);
+  document.getElementById('disp-pb').textContent=pb;
+  document.getElementById('disp-paco2').textContent=paco2;
+  document.getElementById('disp-r').textContent=r.toFixed(2);
+  document.getElementById('disp-barrier').textContent=barrier.toFixed(2);
+
+  const PH2O=47;
+  const pio2=fio2*(pb-PH2O);
+  const pao2=pio2-paco2/r;
+  const estPaO2=pao2-10-(barrier-0.35)*15;
+  const grad=Math.max(0,pao2-estPaO2);
+
+  document.getElementById('lab-pio2').textContent=pio2.toFixed(1);
+  document.getElementById('lab-pao2').textContent=pao2.toFixed(1);
+  document.getElementById('lab-grad').textContent=grad.toFixed(1);
+
+  // Clinical interpretation
+  let cls='clinical-normal', dx='', txt='', mech='';
+  if(pao2>90&&barrier<0.8){
+    cls='clinical-normal';
+    dx='✅ Parámetros Normales';
+    txt=`PAO₂ = ${pao2.toFixed(1)} mmHg es adecuada para oxigenación tisular normal.`;
+    mech='FiO₂ y PaCO₂ dentro de rangos normales. Barrera de difusión delgada y eficiente.';
+  } else if(pao2>60&&pao2<=90){
+    cls='clinical-warning';
+    dx='⚠️ Hipoxemia Alveolar Leve-Moderada';
+    txt=`PAO₂ = ${pao2.toFixed(1)} mmHg. Posible hipoxemia arterial leve dependiendo del gradiente A-a.`;
+    if(pb<600) mech='Causa: Presión barométrica reducida (altitud). FiO₂ efectiva disminuida. Compensación: hiperventilación (↓PaCO₂).';
+    else if(paco2>50) mech='Causa: Hipoventilación alveolar (↑PaCO₂). El CO₂ "desplaza" el O₂ alveolar según la ecuación del gas alveolar.';
+    else if(fio2>0.35) mech='A pesar de O₂ suplementario, la PAO₂ sigue baja por barrera o shunt.';
+    else mech='Evaluar gradiente A-a para diferenciar hipoventilación vs difusión vs shunt.';
+  } else if(pao2<=60&&pao2>40){
+    cls='clinical-danger';
+    dx='🔴 Hipoxemia Alveolar Severa';
+    txt=`PAO₂ = ${pao2.toFixed(1)} mmHg. Insuficiencia respiratoria. Oxigenación tisular comprometida.`;
+    if(pb<450) mech='Gran altitud o ambiente hipobárico. Tratamiento: O₂ suplementario, descenso de altitud.';
+    else if(paco2>55) mech='EPOC o hipoventilación grave. La retención de CO₂ desplaza el O₂ alveolar. Considerar ventilación asistida.';
+    else mech='Barrera de difusión engrosada (fibrosis, edema) o distribución V/Q muy alterada.';
+  } else if(pao2>90&&fio2>0.30){
+    cls='clinical-info';
+    dx='💊 Oxigenoterapia Efectiva';
+    txt=`Con FiO₂ = ${(fio2*100).toFixed(0)}%, PAO₂ = ${pao2.toFixed(1)} mmHg — respuesta adecuada al O₂ suplementario.`;
+    mech='Aumentar FiO₂ es efectivo para hipoxemia por hipoventilación y alteración V/Q. Menos efectivo para shunt intrapulmonar verdadero.';
+  } else if(pb>1500){
+    cls='clinical-info';
+    dx='🤿 Ambiente Hiperbárico (Buceo)';
+    txt=`PAO₂ = ${pao2.toFixed(1)} mmHg — significativamente elevada. Riesgo de toxicidad por O₂.`;
+    mech='La presión hidrostática aumenta la Pb. Según Ley de Henry, más O₂ se disuelve en plasma. Riesgo de narcosis y toxicidad por O₂ con nitrógeno (enfermedad de descompresión).';
+  } else {
+    cls='clinical-danger';
+    dx='❌ Hipoxemia Crítica';
+    txt=`PAO₂ = ${pao2.toFixed(1)} mmHg. Estado crítico. Ventilación mecánica inmediata.`;
+    mech='Múltiples factores combinados: ↑PCO₂, barrera engrosada, FiO₂ insuficiente.';
+  }
+  const box=document.getElementById('lab-clinical');
+  box.className='clinical-box '+cls;
+  document.getElementById('lab-dx').innerHTML=dx;
+  document.getElementById('lab-text').innerHTML=txt;
+  document.getElementById('lab-mechanism').innerHTML=mech;
+  drawLabCanvas(pao2, fio2, barrier);
+}
+
+function drawLabCanvas(pao2, fio2, barrier){
+  const c=document.getElementById('labCanvas');
+  const ctx=c.getContext('2d');
+  c.width=c.offsetWidth;
+  const W=c.width, H=200;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#121820';
+  ctx.fillRect(0,0,W,H);
+
+  // PAO2 bar
+  const maxPao2=200;
+  const barW=Math.max(0,Math.min(1,pao2/maxPao2));
+  const gradCol=ctx.createLinearGradient(0,0,W,0);
+  gradCol.addColorStop(0,'#ef4444');
+  gradCol.addColorStop(0.4,'#f59e0b');
+  gradCol.addColorStop(0.7,'#4ade80');
+  gradCol.addColorStop(1,'#22d3ee');
+  ctx.fillStyle='#1a2332';
+  roundRect(ctx,20,30,W-40,38,8);ctx.fill();
+  ctx.fillStyle=gradCol;
+  roundRect(ctx,20,30,Math.max(0,(W-40)*barW),38,8);ctx.fill();
+  ctx.fillStyle='#d8e8f0';
+  ctx.font='700 13px Nunito, sans-serif';
+  ctx.fillText(`PAO₂: ${pao2.toFixed(1)} mmHg`,28,55);
+
+  // FiO2 indicator
+  ctx.fillStyle='#1a2332';
+  roundRect(ctx,20,82,W-40,28,6);ctx.fill();
+  ctx.fillStyle='#3b82f6';
+  roundRect(ctx,20,82,(W-40)*Math.min(1,fio2),28,6);ctx.fill();
+  ctx.fillStyle='#d8e8f0';
+  ctx.font='700 11px Nunito, sans-serif';
+  ctx.fillText(`FiO₂: ${(fio2*100).toFixed(0)}%`,28,100);
+
+  // Barrier indicator
+  ctx.fillStyle='#1a2332';
+  roundRect(ctx,20,122,W-40,28,6);ctx.fill();
+  const barrierNorm=Math.min(1,barrier/5);
+  const bColor=barrier<1?'#4ade80':barrier<2.5?'#f59e0b':'#ef4444';
+  ctx.fillStyle=bColor;
+  roundRect(ctx,20,122,(W-40)*barrierNorm,28,6);ctx.fill();
+  ctx.fillStyle='#d8e8f0';
+  ctx.fillText(`Barrera difusión: ${barrier.toFixed(2)} µm`,28,140);
+
+  // Legend line
+  ctx.fillStyle='#3d5a73';
+  ctx.font='10px Nunito, sans-serif';
+  ctx.fillText('Barras: PAO₂ (verde=normal), FiO₂ (azul), Barrera difusión (rojo=patológico)',20,178);
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  if(w<=0||h<=0){ctx.beginPath();return;}
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAS EXCHANGE ANIMATION
+// ═══════════════════════════════════════════════════════════
+(function(){
+  const c=document.getElementById('gasExchangeCanvas');
+  const ctx=c.getContext('2d');
+  let particles=[];
+  let raf;
+
+  function resize(){
+    c.width=c.offsetWidth;
+    c.height=320;
+    initParticles();
+  }
+
+  function initParticles(){
+    particles=[];
+    const W=c.width;
+    for(let i=0;i<40;i++){
+      particles.push({
+        type:Math.random()<0.5?'O2':'CO2',
+        x:Math.random()*W*0.4+W*0.05,
+        y:Math.random()*100+20,
+        vx:(Math.random()-0.5)*0.6,
+        vy:(Math.random()-0.5)*0.6,
+        phase:'alveoli',
+        progress:0,
+        alpha:1
+      });
+    }
+    for(let i=0;i<30;i++){
+      const t=Math.random()<0.5?'O2':'CO2';
+      particles.push({
+        type:t,
+        x:Math.random()*W*0.4+W*0.55,
+        y:Math.random()*80+180,
+        vx:(Math.random()-0.5)*0.5,
+        vy:(Math.random()-0.5)*0.5,
+        phase:'capillary',
+        progress:0,
+        alpha:1
+      });
+    }
+  }
+
+  function drawFrame(){
+    const W=c.width, H=c.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#121820';
+    ctx.fillRect(0,0,W,H);
+
+    // Alveolus
+    ctx.beginPath();
+    ctx.ellipse(W*0.25,H*0.28,W*0.22,H*0.22,0,0,Math.PI*2);
+    ctx.fillStyle='rgba(46,204,113,0.07)';ctx.fill();
+    ctx.strokeStyle='rgba(46,204,113,0.5)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='rgba(46,204,113,0.6)';
+    ctx.font=`bold ${Math.min(14,W/45)}px Nunito, sans-serif`;
+    ctx.textAlign='center';
+    ctx.fillText('ALVÉOLO',W*0.25,H*0.08);
+
+    // Capillary
+    ctx.beginPath();
+    ctx.roundRect(W*0.05,H*0.6,W*0.4,H*0.25,10);
+    ctx.fillStyle='rgba(192,57,43,0.09)';ctx.fill();
+    ctx.strokeStyle='rgba(192,57,43,0.45)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='rgba(192,57,43,0.6)';
+    ctx.fillText('CAPILAR PULMONAR',W*0.25,H*0.59);
+
+    // Barrier line
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();
+    ctx.moveTo(W*0.05,H*0.52);ctx.lineTo(W*0.45,H*0.52);
+    ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='rgba(255,255,255,0.25)';
+    ctx.font=`${Math.min(10,W/55)}px Nunito`;
+    ctx.fillText('barrera (0.2–0.5µm)',W*0.25,H*0.51);
+
+    // Right side: systemic
+    ctx.fillStyle='rgba(26,188,156,0.06)';
+    ctx.beginPath();ctx.ellipse(W*0.75,H*0.35,W*0.2,H*0.22,0,0,Math.PI*2);
+    ctx.fill();ctx.strokeStyle='rgba(26,188,156,0.3)';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle='rgba(26,188,156,0.5)';
+    ctx.fillText('TEJIDOS',W*0.75,H*0.15);
+
+    // Arrows
+    drawArrow(ctx,W*0.47,H*0.4,W*0.55,H*0.4,'rgba(26,188,156,0.5)','O₂-rich →');
+    drawArrow(ctx,W*0.55,H*0.5,W*0.47,H*0.5,'rgba(239,68,68,0.5)','← CO₂-rich');
+
+    // Particles
+    particles.forEach(p=>{
+      const col=p.type==='O2'?'rgba(79,195,247,0.85)':'rgba(239,154,154,0.85)';
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,4,0,Math.PI*2);
+      ctx.fillStyle=col;ctx.fill();
+      ctx.fillStyle=p.type==='O2'?'rgba(79,195,247,0.5)':'rgba(239,154,154,0.5)';
+      ctx.beginPath();ctx.arc(p.x,p.y,7,0,Math.PI*2);ctx.fill();
+
+      p.x+=p.vx;p.y+=p.vy;
+
+      // Bounce within zone
+      if(p.phase==='alveoli'){
+        const dx=p.x-W*0.25,dy=p.y-H*0.28;
+        if(dx*dx/(W*0.22)/(W*0.22)+dy*dy/(H*0.22)/(H*0.22)>1){
+          p.vx*=-0.9;p.vy*=-0.9;
+          p.x+=p.vx*2;p.y+=p.vy*2;
+        }
+      } else {
+        if(p.x<W*0.06||p.x>W*0.44) p.vx*=-1;
+        if(p.y<H*0.62||p.y>H*0.83) p.vy*=-1;
+      }
+    });
+
+    // Crossing particles
+    if(Math.random()<0.015){
+      // O2 from alveoli to capillary
+      const angle=Math.random()*Math.PI/3+Math.PI/2*0.5;
+      particles.push({type:'O2',x:W*0.25+Math.cos(angle)*W*0.1,y:H*0.45,vx:0,vy:1.5,phase:'crossing',target:'cap',alpha:1});
+    }
+    if(Math.random()<0.012){
+      // CO2 from capillary to alveoli
+      particles.push({type:'CO2',x:W*0.25+(Math.random()-0.5)*W*0.1,y:H*0.6,vx:0,vy:-1.5,phase:'crossing',target:'alv',alpha:1});
+    }
+    particles=particles.filter(p=>{
+      if(p.phase==='crossing'){
+        p.y+=p.vy;
+        if(p.target==='cap'&&p.y>H*0.6){p.phase='capillary';p.vy=(Math.random()-0.5)*0.5;return true;}
+        if(p.target==='alv'&&p.y<H*0.46){p.phase='alveoli';p.vy=(Math.random()-0.5)*0.5;return true;}
+        return true;
+      }
+      return true;
+    });
+    if(particles.length>120) particles.splice(0,5);
+
+    ctx.textAlign='left';
+    raf=requestAnimationFrame(drawFrame);
+  }
+
+  function drawArrow(ctx,x1,y1,x2,y2,col,label){
+    ctx.strokeStyle=col;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    ctx.fillStyle=col;
+    ctx.font='10px Nunito';ctx.textAlign='center';
+    ctx.fillText(label,(x1+x2)/2,(y1+y2)/2-6);
+  }
+
+  window.addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(resize,200);});
+  resize();
+  drawFrame();
+})();
+
+// ═══════════════════════════════════════════════════════════
+// AIRWAY TREE ANIMATION
+// ═══════════════════════════════════════════════════════════
+(function(){
+  const c=document.getElementById('airwayCanvas');
+  const ctx=c.getContext('2d');
+
+  function resize(){
+    c.width=c.offsetWidth;
+    c.height=340;
+    draw();
+  }
+
+  function draw(){
+    const W=c.width, H=c.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#121820';ctx.fillRect(0,0,W,H);
+    drawBranch(ctx,W/2,20,W/2,90,10,0,6);
+    ctx.fillStyle='#7a9ab5';
+    ctx.font='11px Nunito';ctx.textAlign='center';
+    ctx.fillText('Tráquea (G0)',W/2,15);
+
+    // Legend info
+    ctx.font='10px Nunito';
+    ctx.fillStyle='rgba(100,181,246,0.7)';
+    ctx.fillText('Zona Conductora G0–16 (sin intercambio)',W/2,H-60);
+    ctx.fillStyle='rgba(255,204,2,0.7)';
+    ctx.fillText('Zona de Transición G17–19',W/2,H-44);
+    ctx.fillStyle='rgba(76,175,80,0.7)';
+    ctx.fillText('Zona Respiratoria G20–23 (intercambio gaseoso)',W/2,H-28);
+  }
+
+  function drawBranch(ctx,x1,y1,x2,y2,width,gen,maxGen){
+    if(gen>maxGen||width<0.3) return;
+    const zoneColor=gen<5?'#64b5f6':gen<7?'rgba(255,204,2,0.8)':'rgba(76,175,80,0.8)';
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+    ctx.strokeStyle=zoneColor;
+    ctx.lineWidth=width;
+    ctx.lineCap='round';
+    ctx.stroke();
+
+    if(gen===maxGen){
+      // Alveolar sac
+      ctx.beginPath();
+      ctx.arc(x2,y2,width*1.5+2,0,Math.PI*2);
+      ctx.fillStyle='rgba(76,175,80,0.35)';ctx.fill();
+      ctx.strokeStyle='rgba(76,175,80,0.6)';ctx.lineWidth=0.8;ctx.stroke();
+      return;
+    }
+
+    const len=Math.max(8,(y2-y1)*0.75);
+    const spread=Math.min(60,gen*10+15);
+    const angle1=-Math.PI/2-spread*Math.PI/180;
+    const angle2=-Math.PI/2+spread*Math.PI/180;
+    const newW=width*0.65;
+
+    drawBranch(ctx,x2,y2,x2+Math.cos(angle1)*len,y2+Math.sin(angle1)*len,newW,gen+1,maxGen);
+    drawBranch(ctx,x2,y2,x2+Math.cos(angle2)*len,y2+Math.sin(angle2)*len,newW,gen+1,maxGen);
+  }
+
+  window.addEventListener('resize',()=>{clearTimeout(window._ar);window._ar=setTimeout(resize,200);});
+  resize();
+})();
+
+// ═══════════════════════════════════════════════════════════
+// ALVEOLUS ANIMATION
+// ═══════════════════════════════════════════════════════════
+(function(){
+  const c=document.getElementById('alveolCanvas');
+  const ctx=c.getContext('2d');
+  let molecules=[];
+
+  function resize(){
+    c.width=c.offsetWidth;
+    c.height=300;
+    initMol();
+  }
+
+  function initMol(){
+    molecules=[];
+    const W=c.width;
+    // O2 in alveolus
+    for(let i=0;i<20;i++){
+      molecules.push({type:'O2',x:W*0.15+Math.random()*W*0.3,y:30+Math.random()*100,vx:(Math.random()-0.5)*1.2,vy:(Math.random()-0.5)*1.2,side:'alv'});
+    }
+    // CO2 in capillary
+    for(let i=0;i<18;i++){
+      molecules.push({type:'CO2',x:W*0.15+Math.random()*W*0.3,y:190+Math.random()*70,vx:(Math.random()-0.5)*1.1,vy:(Math.random()-0.5)*1.1,side:'cap'});
+    }
+    // O2 in right capillary (post-exchange)
+    for(let i=0;i<12;i++){
+      molecules.push({type:'O2',x:W*0.6+Math.random()*W*0.35,y:190+Math.random()*70,vx:(Math.random()-0.5)*0.9,vy:(Math.random()-0.5)*0.9,side:'right-cap'});
+    }
+  }
+
+  function drawFrame(){
+    const W=c.width, H=c.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#0e1520';ctx.fillRect(0,0,W,H);
+
+    // Alveolus body
+    ctx.beginPath();ctx.ellipse(W*0.3,H*0.3,W*0.27,H*0.25,0,0,Math.PI*2);
+    ctx.fillStyle='rgba(46,204,113,0.07)';ctx.fill();
+    ctx.strokeStyle='rgba(46,204,113,0.5)';ctx.lineWidth=2;ctx.stroke();
+
+    // Capillary (left, venous)
+    ctx.beginPath();ctx.roundRect(W*0.03,H*0.63,W*0.55,H*0.28,10);
+    ctx.fillStyle='rgba(192,57,43,0.09)';ctx.fill();
+    ctx.strokeStyle='rgba(192,57,43,0.5)';ctx.lineWidth=1.5;ctx.stroke();
+
+    // Capillary (right, arterial - post exchange)
+    ctx.beginPath();ctx.roundRect(W*0.58,H*0.63,W*0.39,H*0.28,10);
+    ctx.fillStyle='rgba(46,204,113,0.09)';ctx.fill();
+    ctx.strokeStyle='rgba(46,204,113,0.4)';ctx.lineWidth=1.5;ctx.stroke();
+
+    // Barrier
+    ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(W*0.03,H*0.61);ctx.lineTo(W*0.57,H*0.61);
+    ctx.strokeStyle='rgba(255,255,255,0.12)';ctx.lineWidth=1;ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Labels
+    ctx.textAlign='center';
+    ctx.fillStyle='rgba(46,204,113,0.55)';ctx.font='bold 11px Nunito';
+    ctx.fillText('Alvéolo (O₂ alto)',W*0.3,H*0.06);
+    ctx.fillStyle='rgba(192,57,43,0.55)';
+    ctx.fillText('Sangre venosa (CO₂ alto)',W*0.28,H*0.625);
+    ctx.fillStyle='rgba(46,204,113,0.55)';
+    ctx.fillText('Sangre arterial (O₂ alto)',W*0.78,H*0.625);
+
+    // Diffusion arrow
+    ctx.fillStyle='rgba(255,255,255,0.25)';
+    ctx.font='10px Nunito';
+    ctx.fillText('← difusión CO₂',W*0.3,H*0.575);
+    ctx.fillText('O₂ difunde →',W*0.3,H*0.555);
+
+    // Draw molecules
+    molecules.forEach(m=>{
+      const col=m.type==='O2'?'rgba(79,195,247,0.9)':'rgba(239,154,154,0.9)';
+      ctx.beginPath();ctx.arc(m.x,m.y,3.5,0,Math.PI*2);
+      ctx.fillStyle=col;ctx.fill();
+
+      m.x+=m.vx;m.y+=m.vy;
+
+      // Boundaries
+      if(m.side==='alv'){
+        const dx=m.x-W*0.3,dy=m.y-H*0.3;
+        if(dx*dx/(W*0.27)/(W*0.27)+dy*dy/(H*0.25)/(H*0.25)>1){
+          m.vx*=-0.9;m.vy*=-0.9;
+          m.x=W*0.3+dx*0.9;m.y=H*0.3+dy*0.9;
+        }
+      } else if(m.side==='cap'){
+        if(m.x<W*0.04||m.x>W*0.57){m.vx*=-1;}
+        if(m.y<H*0.64||m.y>H*0.89){m.vy*=-1;}
+      } else {
+        if(m.x<W*0.59||m.x>W*0.96){m.vx*=-1;}
+        if(m.y<H*0.64||m.y>H*0.89){m.vy*=-1;}
+      }
+    });
+
+    // Occasional crossing
+    if(Math.random()<0.02){
+      const m=molecules.find(m=>m.type==='O2'&&m.side==='alv');
+      if(m){m.vx=0;m.vy=2;m.side='crossing-o2';}
+    }
+    if(Math.random()<0.015){
+      const m=molecules.find(m=>m.type==='CO2'&&m.side==='cap');
+      if(m){m.vx=0;m.vy=-2;m.side='crossing-co2';}
+    }
+    molecules.forEach(m=>{
+      if(m.side==='crossing-o2'&&m.y>H*0.64){m.side='cap';m.vx=(Math.random()-0.5)*1.1;m.vy=(Math.random()-0.5)*1.1;}
+      if(m.side==='crossing-co2'&&m.y<H*0.5){m.side='alv';m.vx=(Math.random()-0.5)*1.2;m.vy=(Math.random()-0.5)*1.2;}
+    });
+
+    requestAnimationFrame(drawFrame);
+  }
+
+  window.addEventListener('resize',()=>{clearTimeout(window._av);window._av=setTimeout(resize,200);});
+  resize();
+  drawFrame();
+})();
+
+// ═══════════════════════════════════════════════════════════
+// BREATHING ANIMATION
+// ═══════════════════════════════════════════════════════════
+(function(){
+  const c=document.getElementById('breathCanvas');
+  const ctx=c.getContext('2d');
+  let t=0;
+
+  function resize(){
+    c.width=c.offsetWidth;
+    c.height=280;
+  }
+
+  function draw(){
+    const W=c.width, H=c.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#0e1520';ctx.fillRect(0,0,W,H);
+
+    // Breath phase
+    t+=0.018;
+    const breath=Math.sin(t)*0.5+0.5; // 0..1
+    const phase=breath>0.5?'inspiración':'espiración';
+    const phaseColor=breath>0.5?'#4fc3f7':'#ef9a9a';
+
+    // Chest outline
+    const chestScale=0.85+breath*0.12;
+    ctx.save();
+    ctx.translate(W/2,H/2-20);
+    ctx.scale(chestScale,chestScale*0.95);
+    ctx.beginPath();
+    ctx.ellipse(0,0,W*0.28,H*0.35,0,0,Math.PI*2);
+    ctx.fillStyle='rgba(45,60,80,0.5)';ctx.fill();
+    ctx.strokeStyle='rgba(100,150,200,0.3)';ctx.lineWidth=1.5;ctx.stroke();
+
+    // Lungs
+    ctx.beginPath();
+    ctx.ellipse(-W*0.1,H*0.04,W*0.1,H*0.22,0,0,Math.PI*2);
+    ctx.fillStyle=`rgba(46,204,113,${0.15+breath*0.15})`;ctx.fill();
+    ctx.strokeStyle='rgba(46,204,113,0.5)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();
+    ctx.ellipse(W*0.1,H*0.04,W*0.1,H*0.22,0,0,Math.PI*2);
+    ctx.fillStyle=`rgba(46,204,113,${0.15+breath*0.15})`;ctx.fill();
+    ctx.strokeStyle='rgba(46,204,113,0.5)';ctx.lineWidth=1.5;ctx.stroke();
+
+    // Diaphragm
+    const diaphY=H*0.22-breath*H*0.08;
+    ctx.beginPath();
+    ctx.moveTo(-W*0.25,diaphY);
+    ctx.bezierCurveTo(-W*0.1,diaphY+(breath-0.5)*H*0.1,W*0.1,diaphY+(breath-0.5)*H*0.1,W*0.25,diaphY);
+    ctx.strokeStyle='#9b59b6';ctx.lineWidth=3;ctx.stroke();
+
+    ctx.restore();
+
+    // Phase label
+    ctx.textAlign='center';
+    ctx.fillStyle=phaseColor;
+    ctx.font='bold 14px Nunito';
+    ctx.fillText(phase.toUpperCase(),W/2,H-30);
+
+    // Volume bar
+    ctx.fillStyle='#1a2332';
+    roundRect(ctx,W*0.05,H-55,W*0.9,16,5);ctx.fill();
+    ctx.fillStyle=phaseColor;
+    roundRect(ctx,W*0.05,H-55,W*0.9*breath,16,5);ctx.fill();
+    ctx.fillStyle='#7a9ab5';ctx.font='9px Nunito';
+    ctx.fillText('Volumen pulmonar',W/2,H-43);
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize',()=>{clearTimeout(window._br);window._br=setTimeout(resize,200);});
+  resize();
+  draw();
+})();
+
+// ═══════════════════════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════════════════════
+const questions = [
+  {
+    text:'¿Cuál es la función PRINCIPAL del sistema respiratorio?',
+    opts:['Producir sonidos mediante las cuerdas vocales','Obtener O₂ del ambiente y eliminar CO₂ del metabolismo celular','Regular la temperatura corporal a través de la evaporación','Filtrar partículas del aire inspirado mediante los cilios'],
+    ans:1,
+    fb:'Correcto. La función principal es el intercambio gaseoso: obtener O₂ y eliminar CO₂ producido por el metabolismo celular. Las otras opciones son funciones secundarias (fonación, defensa pulmonar).',
+    fwrong:'La función principal es el intercambio gaseoso. La producción de sonidos es fonación, la temperatura es regulada por otros sistemas, y el filtrado es una función de defensa secundaria.',
+    topic:'Funciones'
+  },
+  {
+    text:'La reacción CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻ es la base fisiológica para la participación del sistema respiratorio en:',
+    opts:['La producción de surfactante pulmonar','El control del equilibrio ácido-base','La depuración mucociliar de bacterias','La síntesis de angiotensina II'],
+    ans:1,
+    fb:'Correcto. El CO₂ forma ácido carbónico que se disocia en H⁺ y HCO₃⁻. Al eliminar CO₂, el pulmón regula la [H⁺] y el pH. El SNC monitorea PCO₂ y pH para ajustar la ventilación.',
+    fwrong:'Esta reacción demuestra cómo el CO₂ genera H⁺ (acídez). Al eliminar más CO₂ mediante hiperventilación, el pulmón reduce la acidez. Esto es el control respiratorio del equilibrio ácido-base.',
+    topic:'Funciones'
+  },
+  {
+    text:'¿Cuántas generaciones de ramificación tiene el árbol traqueobronquial desde la tráquea hasta los sacos alveolares?',
+    opts:['5 a 10 generaciones','10 a 23 generaciones','25 a 30 generaciones','Exactamente 16 generaciones siempre'],
+    ans:1,
+    fb:'Correcto. El árbol bronquial tiene 10 a 23 generaciones (según la vía que recorra el aire). Los primeros 16 (G0-G16) son la zona conductora, G17-19 la zona de transición, y G20-23 la zona respiratoria.',
+    fwrong:'El árbol traqueobronquial comprende entre 10 y 23 generaciones. Esta variabilidad existe porque la tráquea puede conectarse con los alvéolos por rutas de diferente longitud.',
+    topic:'Estructura'
+  },
+  {
+    text:'Las primeras 16 generaciones de las vías aéreas se denominan zona conductora porque:',
+    opts:['Contienen cartílago que "conduce" el flujo aéreo','No tienen alvéolos y no realizan intercambio gaseoso — constituyen el espacio muerto anatómico','Tienen la mayor velocidad de flujo de aire','Son las más ricas en células caliciformes productoras de moco'],
+    ans:1,
+    fb:'Correcto. Las generaciones 0-16 (tráquea → bronquiolos terminales) NO tienen alvéolos. Por eso no pueden realizar intercambio gaseoso y constituyen el espacio muerto anatómico (~150 mL en adulto).',
+    fwrong:'La zona conductora (G0-16) no tiene alvéolos y, por tanto, no puede realizar intercambio gaseoso. Este volumen "desperdiciado" es el espacio muerto anatómico, aproximadamente 150 mL.',
+    topic:'Estructura'
+  },
+  {
+    text:'¿En qué generaciones comienzan a aparecer los primeros alvéolos?',
+    opts:['Generaciones 1-5 (bronquios principales)','Generaciones 16 (bronquiolos terminales)','Generaciones 17-19 (bronquiolos respiratorios)','Generaciones 10-12 (bronquios segmentarios)'],
+    ans:2,
+    fb:'Correcto. Los alvéolos aparecen por primera vez en las generaciones 17-19, los bronquiolos respiratorios, que conforman la zona de transición. Las G20-23 (conductos y sacos alveolares) son completamente alveolizados.',
+    fwrong:'Los primeros alvéolos aparecen en las generaciones 17-19 (bronquiolos respiratorios — zona de transición). Antes de eso, en G0-16, solo hay zona conductora sin alvéolos.',
+    topic:'Estructura'
+  },
+  {
+    text:'¿Por definición, un bronquiolo se diferencia de un bronquio en que:',
+    opts:['El bronquiolo tiene diámetro < 1 mm y el bronquio > 5 mm','El bronquiolo carece de cartílago de soporte en sus paredes','El bronquiolo tiene más células caliciformes que el bronquio','El bronquiolo está situado fuera del parénquima pulmonar'],
+    ans:1,
+    fb:'Correcto. Por definición, las vías aéreas sin cartílago se llaman bronquiolos. Aparecen cuando las placas cartilaginosas desaparecen (~1 mm diámetro). Sin cartílago, son vulnerables al colapso, contrarrestado por el tejido elástico alveolar.',
+    fwrong:'La definición precisa de bronquiolo es: vía aérea sin cartílago de soporte. La ausencia de cartílago, no el diámetro específico, es el criterio definitorio. Esta distinción tiene importancia en enfermedades obstructivas.',
+    topic:'Estructura'
+  },
+  {
+    text:'Los neumocitos Tipo I cubren el 90-95% de la superficie alveolar. ¿Por qué si son menos numerosos que los Tipo II?',
+    opts:['Porque se replican mucho más rápido','Porque son células mucho más grandes con mayor área de superficie individual','Porque secretan más surfactante que los Tipo II','Porque están presentes desde el desarrollo fetal'],
+    ans:1,
+    fb:'Correcto. Aunque hay ~2× más neumocitos Tipo II que Tipo I en número, cada célula Tipo I tiene un área de superficie mucho mayor (son células escamosas muy extendidas). Así cubren 90-95% de la superficie, lo que facilita la difusión gaseosa.',
+    fwrong:'Los Tipo I cubren más superficie porque cada célula es mucho más grande (extendida). Los Tipo II son más numerosos pero pequeños (cuboidales). Los Tipo I realizan el intercambio gaseoso; los Tipo II producen surfactante.',
+    topic:'Alvéolo'
+  },
+  {
+    text:'La barrera de difusión alvéolo-capilar tiene un grosor normal de:',
+    opts:['5 a 10 µm','0.2 a 0.5 µm','2 a 4 µm','10 a 20 µm'],
+    ans:1,
+    fb:'Correcto. La barrera (epitelio Tipo I + membrana basal + endotelio capilar) normalmente mide solo 0.2 a 0.5 µm. Este grosor mínimo permite una difusión muy eficiente. En edema pulmonar o fibrosis, se engrosa y la difusión se deteriora.',
+    fwrong:'La barrera alvéolo-capilar mide solo 0.2-0.5 µm de grosor en condiciones normales. Esta extrema delgadez permite que los gases difundan en milisegundos. El engrosamiento (edema, fibrosis) compromete el intercambio gaseoso.',
+    topic:'Alvéolo'
+  },
+  {
+    text:'Según la Ley de Dalton, si la presión barométrica es 760 mmHg y el FiO₂ es 0.21, ¿cuál es la presión parcial de O₂ en aire seco?',
+    opts:['21 mmHg','159.6 mmHg','40 mmHg','100 mmHg'],
+    ans:1,
+    fb:'Correcto. PO₂ = FiO₂ × Pb = 0.21 × 760 = 159.6 mmHg (en aire seco). Una vez que el aire llega a la vía aérea, se satura con vapor de agua (PH₂O=47 mmHg), reduciendo la PIO₂ a: 0.21 × (760-47) = 149.7 mmHg.',
+    fwrong:'Por la Ley de Dalton: Pgas = Fgas × Ptotal. Entonces PO₂ = 0.21 × 760 = 159.6 mmHg. Esta es la presión en aire seco ambiente. En vías aéreas húmedas, se resta PH₂O (47 mmHg), dando PIO₂ ≈ 150 mmHg.',
+    topic:'Leyes'
+  },
+  {
+    text:'La Ley de Henry establece que el O₂ disuelto en plasma depende de su presión parcial. Si la solubilidad del O₂ es 0.003 mL/100mL/mmHg y el PaO₂ es 100 mmHg, ¿cuánto O₂ disuelto hay?',
+    opts:['0.3 mL O₂/100 mL sangre','3 mL O₂/100 mL sangre','30 mL O₂/100 mL sangre','0.003 mL O₂/100 mL sangre'],
+    ans:0,
+    fb:'Correcto. O₂ disuelto = 0.003 × 100 = 0.3 mL/100 mL sangre. Esto representa <2% del O₂ total en sangre (la mayoría va unido a hemoglobina: ~20 mL O₂/100 mL). El O₂ disuelto cobra importancia clínica en la cámara hiperbárica.',
+    fwrong:'Por la Ley de Henry: O₂ disuelto = 0.003 × PaO₂ = 0.003 × 100 = 0.3 mL/100 mL. El valor correcto es 0.3 mL O₂/100 mL sangre, que representa solo ~1.5% del contenido total de O₂.',
+    topic:'Leyes'
+  },
+  {
+    text:'Según la ecuación del gas alveolar (PAO₂ = FiO₂×(Pb-PH₂O) - PaCO₂/R), ¿qué pasa con la PAO₂ cuando la PaCO₂ aumenta?',
+    opts:['La PAO₂ aumenta (compensación directa)','La PAO₂ disminuye porque el CO₂ "desplaza" el O₂ alveolar','La PAO₂ no cambia porque R compensa','La PAO₂ depende solo de la FiO₂ y la altitud'],
+    ans:1,
+    fb:'Correcto. En la ecuación PAO₂ = FiO₂(Pb-PH₂O) - PaCO₂/R, si PaCO₂ sube, el término -PaCO₂/R baja la PAO₂. Este mecanismo explica la hipoxemia en hipoventilación: el CO₂ retenido "ocupa espacio" en el alvéolo, desplazando el O₂.',
+    fwrong:'La ecuación del gas alveolar muestra que PAO₂ y PaCO₂ tienen relación inversa: si ↑PaCO₂ → ↓PAO₂. Esta es la hipoxemia por hipoventilación: el CO₂ retenido compite por el espacio gaseoso alveolar.',
+    topic:'Leyes'
+  },
+  {
+    text:'La Ley de Fick establece que la tasa de difusión es proporcional a A×D×ΔP/T. En un paciente con fibrosis pulmonar, ¿cuál parámetro está más afectado?',
+    opts:['El área A (disminuida por fibrosis)','El grosor T (aumentado por la fibrosis intersticial)','La diferencia de presión ΔP (aumentada)','El coeficiente D (reducido por el tejido fibroso)'],
+    ans:1,
+    fb:'Correcto. La fibrosis pulmonar engrosa el intersticio (↑T), aumentando la barrera de difusión. También puede reducir A. El efecto combinado de ↑T y ↓A reduce significativamente la tasa de difusión. Esto causa hipoxemia, especialmente con el ejercicio.',
+    fwrong:'La fibrosis principalmente aumenta el grosor T de la barrera, reduciendo la difusión (V̇gas = A×D×ΔP/T, inversamente proporcional a T). También puede reducir el área A. La ΔP generalmente disminuye (no aumenta) en hipoxemia.',
+    topic:'Leyes'
+  },
+  {
+    text:'¿Qué músculo es el PRINCIPAL de la inspiración?',
+    opts:['Intercostales externos','Escalenos','Diafragma','Esternocleidomastoideo'],
+    ans:2,
+    fb:'Correcto. El diafragma es el músculo principal de la inspiración. Al contraerse, desciende y aumenta el volumen torácico, generando presión negativa que impulsa la entrada de aire. Los demás son músculos accesorios importantes en ejercicio o disnea.',
+    fwrong:'El diafragma es el músculo principal de la inspiración. Al contraerse (inervado por el nervio frénico C3-C5), baja y expande el tórax, reduciendo la presión intratorácica e impulsando el flujo de aire hacia los pulmones.',
+    topic:'Pared Torácica'
+  },
+  {
+    text:'Las células Club (antes llamadas células de Clara) en los bronquiolos realizan todas EXCEPTO:',
+    opts:['Secretar surfactante apoproteínas (SpA, SpB, SpD)','Actuar como células progenitoras para células ciliadas','Producir glucoproteínas y moduladores de inflamación','Generar impulsos nerviosos para controlar el calibre bronquiolar'],
+    ans:3,
+    fb:'Correcto. Las células Club no tienen función nerviosa. Sus funciones son: secretar surfactante apoproteínas, lípidos y glucoproteínas; actuar como progenitoras de células Club y ciliadas; metabolizar sustancias extrañas; participar en el balance hídrico de las vías aéreas.',
+    fwrong:'Las células Club (bronquiolos) secretan proteínas (SpA, SpB, SpD), lípidos, glucoproteínas y moduladores inflamatorios. También son progenitoras celulares y metabolizan sustancias extrañas. Lo que NO hacen es generar señales nerviosas.',
+    topic:'Estructura'
+  },
+  {
+    text:'Según la Ley de Graham, entre el O₂ (PM=32) y el CO₂ (PM=44), ¿cuál difunde más rápido en la FASE GASEOSA?',
+    opts:['CO₂, porque tiene mayor peso molecular','O₂, porque tiene menor peso molecular (difunde ~17% más rápido)','Ambos difunden a la misma velocidad','Depende de la temperatura, no del peso molecular'],
+    ans:1,
+    fb:'Correcto. Por la Ley de Graham: tasa ∝ 1/√PM. O₂ (PM=32) difunde √(44/32) ≈ 1.17× más rápido que CO₂ en fase gaseosa. Sin embargo, en fase líquida/membrana, la ley de Fick es más relevante: el CO₂ es 20× más soluble, compensando.',
+    fwrong:'La Ley de Graham: tasa ∝ 1/√PM. O₂ (PM=32) difunde √(44/32) ≈ 1.17× más rápido que CO₂ en fase gaseosa. Pero en solución, el CO₂ difunde mucho mejor por su alta solubilidad (20× la del O₂).',
+    topic:'Leyes'
+  },
+  {
+    text:'El número estimado de alvéolos en el adulto es aproximadamente:',
+    opts:['30 millones','150 millones','480 millones','2,000 millones'],
+    ans:2,
+    fb:'Correcto. Un estudio más reciente (vs. la estimación clásica de 300 M) calculó la media en 480 millones de alvéolos. Con ~280 billones de capilares, esto genera un área de intercambio de 50-100 m². Cada alvéolo mide 200-250 µm.',
+    fwrong:'Según una estimación actualizada, el adulto tiene aproximadamente 480 millones de alvéolos (la estimación clásica era 300 millones). Con 280 billones de capilares y 500-1,000 capilares por alvéolo, el área de intercambio es enorme: 50-100 m².',
+    topic:'Alvéolo'
+  },
+  {
+    text:'Si un paciente a gran altitud (Pb=380 mmHg) respira aire ambiente (FiO₂=0.21) y tiene PaCO₂=30 mmHg, ¿cuál es su PAO₂ aproximada? (R=0.8, PH₂O=47)',
+    opts:['100 mmHg (igual que nivel del mar)','50.7 mmHg (significativamente reducida)','150 mmHg (aumentada por la altitud)','30 mmHg (igual a PaCO₂)'],
+    ans:1,
+    fb:'Correcto. PAO₂ = 0.21×(380-47) - 30/0.8 = 0.21×333 - 37.5 = 69.9 - 37.5 ≈ 32 mmHg. Nota: con PaCO₂=30 mmHg (hiperventilación compensatoria), PAO₂ ≈ 32 mmHg. La hipoxemia de altitud se explica principalmente por la ↓Pb, no por hipoventilación.',
+    fwrong:'Calculando: PAO₂ = 0.21×(380-47) - 30/0.8 = 0.21×333 - 37.5 ≈ 32 mmHg. A gran altitud la Pb reducida disminuye drásticamente la PAO₂. La hiperventilación (↓PaCO₂) compensa parcialmente, pero la hipoxemia persiste.',
+    topic:'Leyes'
+  },
+];
+
+let answeredCount = 0;
+let correctCount = 0;
+const userAnswers = new Array(questions.length).fill(null);
+
+function buildQuiz(){
+  const container = document.getElementById('quiz-container');
+  container.innerHTML='';
+  questions.forEach((q,qi)=>{
+    const card=document.createElement('div');
+    card.className='quiz-card';
+    card.id=`qcard-${qi}`;
+    const optHtml=q.opts.map((o,oi)=>`
+      <div class="option" id="opt-${qi}-${oi}" onclick="selectOpt(${qi},${oi})">
+        <div class="opt-letter">${String.fromCharCode(65+oi)}</div>
+        <div>${o}</div>
+      </div>`).join('');
+    card.innerHTML=`
+      <div class="question-num">Pregunta ${qi+1} de ${questions.length} &nbsp;·&nbsp; <span class="badge badge-${topicColor(q.topic)}">${q.topic}</span></div>
+      <div class="question-text">${q.text}</div>
+      <div class="options" id="opts-${qi}">${optHtml}</div>
+      <div class="feedback-box feedback-correct" id="fb-correct-${qi}">✅ ${q.fb}</div>
+      <div class="feedback-box feedback-wrong" id="fb-wrong-${qi}">❌ ${q.fwrong}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function topicColor(t){
+  if(t==='Funciones') return 'green';
+  if(t==='Estructura') return 'blue';
+  if(t==='Alvéolo') return 'amber';
+  if(t==='Leyes') return 'purple';
+  return 'red';
+}
+
+function selectOpt(qi, oi){
+  if(userAnswers[qi]!==null) return; // already answered
+  userAnswers[qi]=oi;
+  const correct=questions[qi].ans;
+  const isCorrect=(oi===correct);
+  if(isCorrect) correctCount++;
+  answeredCount++;
+
+  // Disable all options
+  const allOpts=document.querySelectorAll(`#opts-${qi} .option`);
+  allOpts.forEach(o=>o.classList.add('disabled'));
+
+  // Highlight
+  document.getElementById(`opt-${qi}-${oi}`).classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect) document.getElementById(`opt-${qi}-${correct}`).classList.add('correct');
+
+  // Feedback
+  document.getElementById(`fb-correct-${qi}`).style.display=isCorrect?'block':'none';
+  document.getElementById(`fb-wrong-${qi}`).style.display=isCorrect?'none':'block';
+
+  // Card border
+  document.getElementById(`qcard-${qi}`).classList.add(isCorrect?'answered-correct':'answered-wrong');
+
+  // Progress
+  const pct=Math.round((answeredCount/questions.length)*100);
+  document.getElementById('quiz-prog-bar').style.width=pct+'%';
+  document.getElementById('quiz-prog-text').textContent=`${answeredCount} / ${questions.length}`;
+
+  // Show finish button when done
+  if(answeredCount===questions.length){
+    document.getElementById('btn-finish').style.display='inline-flex';
+    buildReview();
+    updateFinalScore();
+  }
+}
+
+function buildReview(){
+  const sec=document.getElementById('review-section');
+  sec.style.display='block';
+  const container=document.getElementById('review-container');
+  container.innerHTML='';
+  questions.forEach((q,qi)=>{
+    const ua=userAnswers[qi];
+    const correct=ua===q.ans;
+    const item=document.createElement('div');
+    item.className='review-item';
+    item.innerHTML=`
+      <div class="review-icon">${correct?'✅':'❌'}</div>
+      <div>
+        <div class="review-question">P${qi+1}: ${q.text.substring(0,70)}…</div>
+        <div class="review-answer ${correct?'review-correct':'review-wrong'}">
+          Tu respuesta: ${q.opts[ua]} ${correct?'':`→ Correcta: ${q.opts[q.ans]}`}
+        </div>
+      </div>`;
+    container.appendChild(item);
+  });
+}
+
+function updateFinalScore(){
+  // Score circle
+  const pct=correctCount/questions.length;
+  const deg=Math.round(pct*360);
+  const col=pct>=0.8?'var(--accent)':pct>=0.6?'var(--amber)':'var(--red)';
+  document.getElementById('final-score-circle').style.background=
+    `conic-gradient(${col} ${deg}deg, var(--border) ${deg}deg)`;
+  document.getElementById('final-num').textContent=correctCount;
+  document.getElementById('final-den').textContent=`/ ${questions.length}`;
+
+  const msgs=[
+    {min:0.9, msg:'🏆 ¡Excelencia total! Dominas la fisiología pulmonar. ¡El pulmón tiene un experto!'},
+    {min:0.75, msg:'🌟 ¡Muy bien! Sólida comprensión. Un poco más de práctica y serás imbatible.'},
+    {min:0.6, msg:'💪 Buen esfuerzo. Tienes bases sólidas. Repasa los conceptos de leyes de gases y estructura alveolar.'},
+    {min:0.4, msg:'📖 Vas por buen camino. Te recomiendo repasar el Capítulo 1 y el Apéndice de Lange con detalle.'},
+    {min:0, msg:'🔄 No te desanimes. La fisiología pulmonar requiere práctica. ¡Vuelve a repasar los conceptos y vuelve a intentarlo!'},
+  ];
+  const m=msgs.find(x=>pct>=x.min);
+  document.getElementById('motivational-msg').textContent=m.msg;
+  document.getElementById('score-pct').textContent=`${Math.round(pct*100)}% de respuestas correctas`;
+
+  // Breakdown
+  const topics=['Funciones','Estructura','Alvéolo','Leyes','Pared Torácica'];
+  const bc=document.getElementById('breakdown-content');
+  bc.innerHTML='';
+  topics.forEach(topic=>{
+    const qs=questions.filter(q=>q.topic===topic);
+    const correct2=qs.filter((q,i)=>{
+      const qi=questions.indexOf(q);
+      return userAnswers[qi]===q.ans;
+    }).length;
+    const p=qs.length>0?correct2/qs.length:0;
+    const colB=p>=0.75?'var(--accent)':p>=0.5?'var(--amber)':'var(--red)';
+    bc.innerHTML+=`
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;font-size:.83rem;margin-bottom:4px;">
+          <span>${topic}</span><span style="color:${colB};font-weight:700;">${correct2}/${qs.length}</span>
+        </div>
+        <div style="background:var(--border);border-radius:50px;height:6px;">
+          <div style="width:${Math.round(p*100)}%;height:100%;background:${colB};border-radius:50px;transition:width .5s;"></div>
+        </div>
+      </div>`;
+  });
+}
+
+function resetQuiz(){
+  answeredCount=0;correctCount=0;
+  userAnswers.fill(null);
+  document.getElementById('quiz-prog-bar').style.width='0%';
+  document.getElementById('quiz-prog-text').textContent='0 / '+questions.length;
+  document.getElementById('btn-finish').style.display='none';
+  document.getElementById('review-section').style.display='none';
+  document.getElementById('final-num').textContent='—';
+  document.getElementById('final-score-circle').style.background=
+    'conic-gradient(var(--accent) 0deg, var(--border) 0deg)';
+  document.getElementById('motivational-msg').textContent='Completa el quiz para ver tu puntuación';
+  document.getElementById('score-pct').textContent='';
+  buildQuiz();
+  gotoSec(7);
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+buildQuiz();
+updateLab();
+
+// Resize lab canvas on init
+setTimeout(()=>{
+  const c=document.getElementById('labCanvas');
+  if(c){c.width=c.offsetWidth;updateLab();}
+},100);
+window.addEventListener('resize',()=>{
+  clearTimeout(window._lr);
+  window._lr=setTimeout(()=>{
+    const c=document.getElementById('labCanvas');
+    if(c){c.width=c.offsetWidth;updateLab();}
+  },300);
+});
+</script>
+</body>
+</html>
